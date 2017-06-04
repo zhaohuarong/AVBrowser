@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+class QListWidgetItem;
+
 namespace Ui {
 class MainWindow;
 }
@@ -16,7 +18,16 @@ public:
     ~MainWindow();
 
 private:
+    void chakan(const QString &path);
+
+private slots:
+    void on_btnOpen_clicked();
+    void onOpenVideo(QListWidgetItem *item);
+
+private:
     Ui::MainWindow *ui;
+    QStringList m_lstVideoFormat;
+    QStringList m_lstImageFormat;
 };
 
 #endif // MAINWINDOW_H

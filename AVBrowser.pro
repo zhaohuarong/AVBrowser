@@ -24,8 +24,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    setting.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    setting.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    res.qrc
