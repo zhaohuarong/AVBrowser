@@ -38,3 +38,4 @@ CMakeLists.txt.user
 
 release/
 debug/
+bin/*.exe
