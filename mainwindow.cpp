@@ -14,6 +14,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->label_1->setScaledContents(true);
+    ui->label_2->setScaledContents(true);
+    ui->label_3->setScaledContents(true);
+    ui->label_4->setScaledContents(true);
+
     m_lstVideoFormat = g_pSetting->value("videoFormat").toString().split('|');
     m_lstImageFormat = g_pSetting->value("imageFormat").toString().split('|');
     qDebug() << m_lstVideoFormat << m_lstImageFormat;
@@ -38,6 +43,7 @@ void MainWindow::chakan(const QString &path)
             if(m_lstVideoFormat.contains(mfi.suffix()))
             {
                 QListWidgetItem *item = new QListWidgetItem(QIcon(":/image/video.png"), mfi.fileName(), ui->lstFileName);
+                item->setToolTip(mfi.fileName());
                 item->setData(Qt::UserRole, mfi.absoluteFilePath());
                 ui->lstFileName->addItem(item);
             }
@@ -55,13 +61,13 @@ void MainWindow::chakan(const QString &path)
 void MainWindow::showImages(const QStringList &lstImageFilePath)
 {
     if(lstImageFilePath.count() > 0)
-        ui->label_1->setPixmap(QPixmap(lstImageFilePath.at(0)));
+        ui->label_1->setPixmap(QPixmap(lstImageFilePath.at(0)).scaled(ui->label_1->size()));
     if(lstImageFilePath.count() > 1)
-        ui->label_2->setPixmap(QPixmap(lstImageFilePath.at(1)));
+        ui->label_2->setPixmap(QPixmap(lstImageFilePath.at(1)).scaled(ui->label_2->size()));
     if(lstImageFilePath.count() > 2)
-        ui->label_3->setPixmap(QPixmap(lstImageFilePath.at(2)));
+        ui->label_3->setPixmap(QPixmap(lstImageFilePath.at(2)).scaled(ui->label_3->size()));
     if(lstImageFilePath.count() > 3)
-        ui->label_4->setPixmap(QPixmap(lstImageFilePath.at(3)));
+        ui->label_4->setPixmap(QPixmap(lstImageFilePath.at(3)).scaled(ui->label_4->size()));
 }
 
 void MainWindow::on_btnOpen_clicked()
