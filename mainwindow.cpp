@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << m_lstVideoFormat << m_lstImageFormat;
 
     connect(ui->lstFileName, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(onOpenVideo(QListWidgetItem *)));
+    connect(ui->lstFileName, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(onCurrentFileChanged(QListWidgetItem *)));
 }
 
 MainWindow::~MainWindow()
@@ -51,6 +52,18 @@ void MainWindow::chakan(const QString &path)
     }
 }
 
+void MainWindow::showImages(const QStringList &lstImageFilePath)
+{
+    if(lstImageFilePath.count() > 0)
+        ui->label_1->setPixmap(QPixmap(lstImageFilePath.at(0)));
+    if(lstImageFilePath.count() > 1)
+        ui->label_2->setPixmap(QPixmap(lstImageFilePath.at(1)));
+    if(lstImageFilePath.count() > 2)
+        ui->label_3->setPixmap(QPixmap(lstImageFilePath.at(2)));
+    if(lstImageFilePath.count() > 3)
+        ui->label_4->setPixmap(QPixmap(lstImageFilePath.at(3)));
+}
+
 void MainWindow::on_btnOpen_clicked()
 {
     QString strDir = QFileDialog::getExistingDirectory(this, "", "");
@@ -63,4 +76,19 @@ void MainWindow::on_btnOpen_clicked()
 void MainWindow::onOpenVideo(QListWidgetItem *item)
 {
     QDesktopServices::openUrl(item->data(Qt::UserRole).toString());
+}
+
+void MainWindow::onCurrentFileChanged(QListWidgetItem *item)
+{
+    QStringList lstImageFilePath;
+
+    qDebug() << item->data(Qt::UserRole).toString();
+    QDir dir = QFileInfo(item->data(Qt::UserRole).toString()).dir();
+    QFileInfoList lstImageInfo = dir.entryInfoList();
+    foreach(QFileInfo info, lstImageInfo)
+    {
+        if(m_lstImageFormat.contains(info.suffix()))
+            lstImageFilePath << info.absoluteFilePath();
+    }
+    showImages(lstImageFilePath);
 }

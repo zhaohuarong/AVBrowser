@@ -19,10 +19,12 @@ public:
 
 private:
     void chakan(const QString &path);
+    void showImages(const QStringList &lstImageFilePath);
 
 private slots:
     void on_btnOpen_clicked();
     void onOpenVideo(QListWidgetItem *item);
+    void onCurrentFileChanged(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
