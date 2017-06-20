@@ -1,3 +1,5 @@
+#include <QProcess>
+#include <QTextCodec>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QDir>
@@ -72,16 +74,17 @@ void MainWindow::showImages(const QStringList &lstImageFilePath)
 
 void MainWindow::on_btnOpen_clicked()
 {
-    QString strDir = QFileDialog::getExistingDirectory(this, "", "");
+    QString strDir = QFileDialog::getExistingDirectory(this, "", g_pSetting->value("lastDir").toString());
     if(strDir.trimmed().isEmpty())
         return;
     ui->lstFileName->clear();
+    g_pSetting->setValue("lastDir", strDir);
     chakan(strDir);
 }
 
 void MainWindow::onOpenVideo(QListWidgetItem *item)
 {
-    QDesktopServices::openUrl(item->data(Qt::UserRole).toString());
+    QDesktopServices::openUrl(QUrl::fromLocalFile(item->data(Qt::UserRole).toString()));
 }
 
 void MainWindow::onCurrentFileChanged(QListWidgetItem *item)

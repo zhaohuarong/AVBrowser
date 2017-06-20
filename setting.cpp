@@ -13,6 +13,11 @@ Setting *Setting::instance()
     return m_pInstance;
 }
 
+void Setting::setValue(const QString &key, const QVariant &value)
+{
+    return m_pSettings->setValue(QString("config/%1").arg(key), value);
+}
+
 QVariant Setting::value(const QString &key)
 {
     return m_pSettings->value(QString("config/%1").arg(key), "");

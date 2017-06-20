@@ -13,6 +13,7 @@ class Setting : public QObject
 
 public:
     static Setting *instance();
+    void setValue(const QString &key, const QVariant &value);
     QVariant value(const QString &key);
 
 private:
