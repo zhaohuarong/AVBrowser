@@ -1,3 +1,4 @@
+#include <QMenu>
 #include <QProcess>
 #include <QTextCodec>
 #include <QDesktopServices>
@@ -15,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->lstFileName->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->lstFileName, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onMenuListFile(QPoint)));
 
     ui->label_1->setScaledContents(true);
     ui->label_2->setScaledContents(true);
@@ -44,7 +48,8 @@ void MainWindow::chakan(const QString &path)
             //qDebug()<< "File :" << mfi.fileName();
             if(m_lstVideoFormat.contains(mfi.suffix()))
             {
-                QListWidgetItem *item = new QListWidgetItem(QIcon(":/image/video.png"), mfi.fileName(), ui->lstFileName);
+                //QListWidgetItem *item = new QListWidgetItem(QIcon(":/image/video.png"), mfi.fileName(), ui->lstFileName);
+                QListWidgetItem *item = new QListWidgetItem(QIcon(":/image/video.png"), QString("(%1MB)%2").arg(mfi.size() / 1024 / 1024).arg(mfi.fileName()), ui->lstFileName);
                 item->setToolTip(mfi.fileName());
                 item->setData(Qt::UserRole, mfi.absoluteFilePath());
                 ui->lstFileName->addItem(item);
@@ -91,7 +96,6 @@ void MainWindow::onCurrentFileChanged(QListWidgetItem *item)
 {
     QStringList lstImageFilePath;
 
-    qDebug() << item->data(Qt::UserRole).toString();
     QDir dir = QFileInfo(item->data(Qt::UserRole).toString()).dir();
     QFileInfoList lstImageInfo = dir.entryInfoList();
     foreach(QFileInfo info, lstImageInfo)
@@ -100,4 +104,20 @@ void MainWindow::onCurrentFileChanged(QListWidgetItem *item)
             lstImageFilePath << info.absoluteFilePath();
     }
     showImages(lstImageFilePath);
+}
+
+void MainWindow::onMenuListFile(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+    QMenu menu(ui->lstFileName);
+    QAction actionOpenFolder("openFolder", &menu);
+    connect(&actionOpenFolder, SIGNAL(triggered()), this, SLOT(onOpenFolder()));
+    menu.addAction(&actionOpenFolder);
+    menu.exec(QCursor::pos());
+}
+
+void MainWindow::onOpenFolder()
+{
+    QString strFilePath = ui->lstFileName->currentItem()->data(Qt::UserRole).toString();
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(strFilePath).path()));
 }

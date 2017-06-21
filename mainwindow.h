@@ -25,6 +25,8 @@ private slots:
     void on_btnOpen_clicked();
     void onOpenVideo(QListWidgetItem *item);
     void onCurrentFileChanged(QListWidgetItem *item);
+    void onMenuListFile(const QPoint &pos);
+    void onOpenFolder();
 
 private:
     Ui::MainWindow *ui;
