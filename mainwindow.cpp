@@ -6,36 +6,35 @@
 #include <QDir>
 #include <QDebug>
 #include <QListWidgetItem>
+#include <QProgressDialog>
 
 #include <setting.h>
+#include "define.h"
+#include "item.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+QStringList m_lstVideoFormat;
+QStringList m_lstImageFormat;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    ui->lstFileName->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->lstFileName, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onMenuListFile(QPoint)));
-
-    ui->label_1->setScaledContents(true);
-    ui->label_2->setScaledContents(true);
-    ui->label_3->setScaledContents(true);
-    ui->label_4->setScaledContents(true);
-
     m_lstVideoFormat = g_pSetting->value("videoFormat").toString().split('|');
     m_lstImageFormat = g_pSetting->value("imageFormat").toString().split('|');
     qDebug() << m_lstVideoFormat << m_lstImageFormat;
-
-    connect(ui->lstFileName, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(onOpenVideo(QListWidgetItem *)));
-    connect(ui->lstFileName, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(onCurrentFileChanged(QListWidgetItem *)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::resizeEvent(QResizeEvent *e)
+{
+    Q_UNUSED(e);
 }
 
 void MainWindow::chakan(const QString &path)
@@ -45,36 +44,19 @@ void MainWindow::chakan(const QString &path)
     {
         if(mfi.isFile())
         {
-            //qDebug()<< "File :" << mfi.fileName();
             if(m_lstVideoFormat.contains(mfi.suffix()))
             {
-                //QListWidgetItem *item = new QListWidgetItem(QIcon(":/image/video.png"), mfi.fileName(), ui->lstFileName);
-                QListWidgetItem *item = new QListWidgetItem(QIcon(":/image/video.png"), QString("(%1MB)%2").arg(mfi.size() / 1024 / 1024).arg(mfi.fileName()), ui->lstFileName);
-                item->setToolTip(mfi.fileName());
-                item->setData(Qt::UserRole, mfi.absoluteFilePath());
-                ui->lstFileName->addItem(item);
+                m_lstAllVideoPath << mfi.absoluteFilePath();
             }
+            qApp->processEvents();
         }
         else
         {
             if(mfi.fileName()=="." || mfi.fileName() == "..")
                 continue;
-            //qDebug() << "Entry Dir" << mfi.absoluteFilePath();
             chakan(mfi.absoluteFilePath());
         }
     }
-}
-
-void MainWindow::showImages(const QStringList &lstImageFilePath)
-{
-    if(lstImageFilePath.count() > 0)
-        ui->label_1->setPixmap(QPixmap(lstImageFilePath.at(0)).scaled(ui->label_1->size()));
-    if(lstImageFilePath.count() > 1)
-        ui->label_2->setPixmap(QPixmap(lstImageFilePath.at(1)).scaled(ui->label_2->size()));
-    if(lstImageFilePath.count() > 2)
-        ui->label_3->setPixmap(QPixmap(lstImageFilePath.at(2)).scaled(ui->label_3->size()));
-    if(lstImageFilePath.count() > 3)
-        ui->label_4->setPixmap(QPixmap(lstImageFilePath.at(3)).scaled(ui->label_4->size()));
 }
 
 void MainWindow::on_btnOpen_clicked()
@@ -82,42 +64,31 @@ void MainWindow::on_btnOpen_clicked()
     QString strDir = QFileDialog::getExistingDirectory(this, "", g_pSetting->value("lastDir").toString());
     if(strDir.trimmed().isEmpty())
         return;
-    ui->lstFileName->clear();
+    m_lstAllVideoPath.clear();
+    foreach (Item *item, m_lstCurrentItems)
+    {
+        delete item;
+        qDebug() << "delete";
+    }
+    m_lstCurrentItems.clear();
     g_pSetting->setValue("lastDir", strDir);
     chakan(strDir);
-}
 
-void MainWindow::onOpenVideo(QListWidgetItem *item)
-{
-    QDesktopServices::openUrl(QUrl::fromLocalFile(item->data(Qt::UserRole).toString()));
-}
+    QProgressDialog dlg("Loading...", "Abort Copy", 0, m_lstAllVideoPath.count(), this);
+    dlg.setWindowModality(Qt::WindowModal);
+    dlg.show();
 
-void MainWindow::onCurrentFileChanged(QListWidgetItem *item)
-{
-    QStringList lstImageFilePath;
-
-    QDir dir = QFileInfo(item->data(Qt::UserRole).toString()).dir();
-    QFileInfoList lstImageInfo = dir.entryInfoList();
-    foreach(QFileInfo info, lstImageInfo)
+    int index = 0;
+    foreach(QString pathVideo, m_lstAllVideoPath)
     {
-        if(m_lstImageFormat.contains(info.suffix()))
-            lstImageFilePath << info.absoluteFilePath();
+        dlg.setValue(index ++);
+        if (dlg.wasCanceled())
+            break;
+        Item *pItem = new Item(this);
+        pItem->setVideoPath(pathVideo);
+        ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
+        m_lstCurrentItems << pItem;
+        qApp->processEvents();
     }
-    showImages(lstImageFilePath);
-}
-
-void MainWindow::onMenuListFile(const QPoint &pos)
-{
-    Q_UNUSED(pos);
-    QMenu menu(ui->lstFileName);
-    QAction actionOpenFolder("openFolder", &menu);
-    connect(&actionOpenFolder, SIGNAL(triggered()), this, SLOT(onOpenFolder()));
-    menu.addAction(&actionOpenFolder);
-    menu.exec(QCursor::pos());
-}
-
-void MainWindow::onOpenFolder()
-{
-    QString strFilePath = ui->lstFileName->currentItem()->data(Qt::UserRole).toString();
-    QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(strFilePath).path()));
+    dlg.setValue(m_lstAllVideoPath.count());
 }
