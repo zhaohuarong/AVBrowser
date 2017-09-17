@@ -49,6 +49,12 @@
    </property>
    <item row="0" column="0" colspan="4">
     <widget class="QPushButton" name="pushButton">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
@@ -87,7 +93,7 @@ background-color: rgb(85, 255, 127);</string>
    <item row="1" column="2">
     <widget class="QLabel" name="p3">
      <property name="frameShape">
-      <enum>QFrame::Box</enum>
+      <enum>QFrame::NoFrame</enum>
      </property>
      <property name="text">
       <string>TextLabel</string>

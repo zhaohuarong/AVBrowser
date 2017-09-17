@@ -88,6 +88,7 @@ void MainWindow::on_btnOpen_clicked()
         pItem->setVideoPath(pathVideo);
         ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
         m_lstCurrentItems << pItem;
+        statusBar()->showMessage(QString("Total : %1").arg(index));
         qApp->processEvents();
     }
     dlg.setValue(m_lstAllVideoPath.count());
