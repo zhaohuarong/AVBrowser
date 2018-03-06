@@ -50,7 +50,7 @@ void MainWindow::chakan(const QString &path)
         {
             if(m_lstVideoFormat.contains(mfi.suffix()))
             {
-                m_lstAllVideoPath << mfi.absoluteFilePath();
+                m_mapAllVideoPath.insert(mfi.size(), mfi.absoluteFilePath());
             }
             qApp->processEvents();
         }
@@ -68,7 +68,7 @@ void MainWindow::on_btnOpen_clicked()
     QString strDir = QFileDialog::getExistingDirectory(this, "", g_pSetting->value("lastDir").toString());
     if(strDir.trimmed().isEmpty())
         return;
-    m_lstAllVideoPath.clear();
+    m_mapAllVideoPath.clear();
     foreach (Item *item, m_lstCurrentItems)
     {
         delete item;
@@ -78,23 +78,25 @@ void MainWindow::on_btnOpen_clicked()
     g_pSetting->setValue("lastDir", strDir);
     chakan(strDir);
 
-    QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_lstAllVideoPath.count(), this);
+    QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_mapAllVideoPath.count(), this);
     dlg.setWindowModality(Qt::WindowModal);
     dlg.show();
 
     int index = 0;
-    foreach(QString pathVideo, m_lstAllVideoPath)
+    for(QMultiMap<long long, QString>::const_iterator iter = m_mapAllVideoPath.constEnd() - 1; iter != m_mapAllVideoPath.constBegin() - 1; iter --)
     {
         dlg.setValue(index ++);
         if (dlg.wasCanceled())
             break;
         Item *pItem = new Item(this);
         pItem->setIndex(index);
-        pItem->setVideoPath(pathVideo);
+        pItem->setSize(iter.key());
+        pItem->setVideoPath(iter.value());
+        pItem->showImage();
         ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
         m_lstCurrentItems << pItem;
         statusBar()->showMessage(tr("Total : %1").arg(index));
         qApp->processEvents();
     }
-    dlg.setValue(m_lstAllVideoPath.count());
+    dlg.setValue(m_mapAllVideoPath.count());
 }

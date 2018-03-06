@@ -31,10 +31,6 @@ Item::~Item()
 void Item::setVideoPath(const QString &path)
 {
     m_strVideoPath = path;
-    QFileInfo mfi(path);
-    ui->pushButton->setText(QString("%1.(%2MB)%3").arg(m_nIndex).arg(mfi.size() / 1024 / 1024).arg(mfi.fileName()));
-
-    showImage(path);
 }
 
 void Item::contextMenuEvent(QContextMenuEvent *e)
@@ -52,9 +48,11 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     menu.exec();
 }
 
-void Item::showImage(const QString &path)
+void Item::showImage()
 {
-    QFileInfoList lstImageInfo = QFileInfo(path).dir().entryInfoList();
+    ui->pushButton->setText(QString("%1.(%2MB)%3").arg(m_nIndex).arg(m_nSize / 1024 / 1024).arg(QFileInfo(m_strVideoPath).fileName()));
+
+    QFileInfoList lstImageInfo = QFileInfo(m_strVideoPath).dir().entryInfoList();
     int index = 0;
     bool bHaveImage = false;
     for(int i = lstImageInfo.count() - 1; i > 0; i --)

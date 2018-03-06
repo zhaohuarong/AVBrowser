@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QMultiMap>
 #include <QMainWindow>
 
 class QListWidgetItem;
@@ -30,7 +31,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QStringList m_lstAllVideoPath;
+    QMultiMap<long long, QString> m_mapAllVideoPath;
     QList<Item *> m_lstCurrentItems;
 };
 
