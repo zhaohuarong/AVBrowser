@@ -1,3 +1,4 @@
+#include <QLabel>
 #include <QUrl>
 #include <QDesktopServices>
 #include <QDir>
@@ -34,29 +35,15 @@ void Item::showImage(const QString &path)
 {
     QFileInfoList lstImageInfo = QFileInfo(path).dir().entryInfoList();
     int index = 0;
-    foreach(QFileInfo info, lstImageInfo)
+    for(int i = lstImageInfo.count() - 1; i > 0; i --)
     {
+        QFileInfo info = lstImageInfo.at(i);
         if(m_lstImageFormat.contains(info.suffix()))
         {
-            QLabel *pLabel = NULL;
-            switch(index)
-            {
-            case 0:
-                pLabel = ui->p1;
-                break;
-            case 1:
-                pLabel = ui->p2;
-                break;
-            case 2:
-                pLabel = ui->p3;
-                break;
-            case 3:
-                pLabel = ui->p4;
-                break;
-            }
+            QLabel *pLabel = new QLabel(this);
+            ui->imageLayout->insertWidget(0, pLabel);
 
-            if(pLabel != NULL)
-                pLabel->setPixmap(QPixmap(info.absoluteFilePath()).scaled(this->size(), Qt::KeepAspectRatio));
+            pLabel->setPixmap(QPixmap(info.absoluteFilePath()).scaled(this->size(), Qt::KeepAspectRatio));
 
             index ++;
         }
