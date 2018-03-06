@@ -22,9 +22,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    setWindowTitle("Browser");
+
     m_lstVideoFormat = g_pSetting->value("videoFormat").toString().split('|');
     m_lstImageFormat = g_pSetting->value("imageFormat").toString().split('|');
-    qDebug() << m_lstVideoFormat << m_lstImageFormat;
+    qDebug() << "Video Format:" << m_lstVideoFormat;
+    qDebug() << "Audio Format:" << m_lstImageFormat;
 }
 
 MainWindow::~MainWindow()

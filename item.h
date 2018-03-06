@@ -17,11 +17,15 @@ public:
 
     void setVideoPath(const QString &path);
 
+protected:
+    void contextMenuEvent(QContextMenuEvent *e);
+
 private:
     void showImage(const QString &path);
 
 private slots:
-    void onOpen();
+    void onPlayVideo();
+    void onOpenDir();
 
 private:
     Ui::Item *ui;

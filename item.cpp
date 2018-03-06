@@ -1,3 +1,6 @@
+#include <QContextMenuEvent>
+#include <QMenu>
+#include <QAction>
 #include <QLabel>
 #include <QUrl>
 #include <QDesktopServices>
@@ -14,7 +17,7 @@ Item::Item(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(onOpen()));
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(onPlayVideo()));
 }
 
 Item::~Item()
@@ -29,6 +32,21 @@ void Item::setVideoPath(const QString &path)
     ui->pushButton->setText(QString("(%1MB)%2").arg(mfi.size() / 1024 / 1024).arg(mfi.fileName()));
 
     showImage(path);
+}
+
+void Item::contextMenuEvent(QContextMenuEvent *e)
+{
+    e->accept();
+    QMenu menu(this);
+    QAction actPlayVideo(tr("Play video"), &menu);
+    QAction actOpenDir(tr("Open Dir"), &menu);
+    connect(&actPlayVideo, SIGNAL(triggered()), this, SLOT(onPlayVideo()));
+    connect(&actOpenDir, SIGNAL(triggered()), this, SLOT(onOpenDir()));
+
+    menu.addAction(&actPlayVideo);
+    menu.addAction(&actOpenDir);
+    menu.move(cursor().pos());
+    menu.exec();
 }
 
 void Item::showImage(const QString &path)
@@ -50,7 +68,12 @@ void Item::showImage(const QString &path)
     }
 }
 
-void Item::onOpen()
+void Item::onPlayVideo()
 {
     QDesktopServices::openUrl(QUrl::fromLocalFile(m_strVideoPath));
+}
+
+void Item::onOpenDir()
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(m_strVideoPath).dir().absolutePath()));
 }
