@@ -41,8 +41,8 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
 {
     e->accept();
     QMenu menu(this);
-    QAction actPlayVideo(tr("Play video"), &menu);
-    QAction actOpenDir(tr("Open Dir"), &menu);
+    QAction actPlayVideo(QIcon(":/image/video.png"), tr("Play Video"), &menu);
+    QAction actOpenDir(QIcon(":/image/open.png"), tr("Open Dir"), &menu);
     connect(&actPlayVideo, SIGNAL(triggered()), this, SLOT(onPlayVideo()));
     connect(&actOpenDir, SIGNAL(triggered()), this, SLOT(onOpenDir()));
 
@@ -56,18 +56,23 @@ void Item::showImage(const QString &path)
 {
     QFileInfoList lstImageInfo = QFileInfo(path).dir().entryInfoList();
     int index = 0;
+    bool bHaveImage = false;
     for(int i = lstImageInfo.count() - 1; i > 0; i --)
     {
         QFileInfo info = lstImageInfo.at(i);
         if(m_lstImageFormat.contains(info.suffix()))
         {
+            bHaveImage = true;
             ItemImageLabel *pLabel = new ItemImageLabel(this);
             ui->imageLayout->insertWidget(0, pLabel);
             pLabel->setImagePath(info.absoluteFilePath());
-            //pLabel->setPixmap(QPixmap(info.absoluteFilePath()).scaled(this->size(), Qt::KeepAspectRatio));
             index ++;
         }
     }
+
+    if(!bHaveImage)
+        setFixedHeight(ui->pushButton->height());
+    ui->pushButton->setStyleSheet(QString("text-align: left; background-color: %1;").arg(bHaveImage ? "rgb(0, 255, 0)" : "rgb(255, 0, 0)"));
 }
 
 void Item::onPlayVideo()
