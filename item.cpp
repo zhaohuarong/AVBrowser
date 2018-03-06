@@ -7,6 +7,8 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QDebug>
+
+#include "itemimagelabel.h"
 #include "define.h"
 #include "item.h"
 #include "ui_item.h"
@@ -58,11 +60,10 @@ void Item::showImage(const QString &path)
         QFileInfo info = lstImageInfo.at(i);
         if(m_lstImageFormat.contains(info.suffix()))
         {
-            QLabel *pLabel = new QLabel(this);
+            ItemImageLabel *pLabel = new ItemImageLabel(this);
             ui->imageLayout->insertWidget(0, pLabel);
-
-            pLabel->setPixmap(QPixmap(info.absoluteFilePath()).scaled(this->size(), Qt::KeepAspectRatio));
-
+            pLabel->setImagePath(info.absoluteFilePath());
+            //pLabel->setPixmap(QPixmap(info.absoluteFilePath()).scaled(this->size(), Qt::KeepAspectRatio));
             index ++;
         }
     }

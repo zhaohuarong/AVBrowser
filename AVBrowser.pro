@@ -12,12 +12,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     setting.cpp \
-    item.cpp
+    item.cpp \
+    itemimagelabel.cpp
 
 HEADERS  += mainwindow.h \
     setting.h \
     item.h \
-    define.h
+    define.h \
+    itemimagelabel.h
 
 FORMS    += mainwindow.ui \
     item.ui
