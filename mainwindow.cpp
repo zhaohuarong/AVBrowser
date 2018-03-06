@@ -48,7 +48,7 @@ void MainWindow::chakan(const QString &path)
     {
         if(mfi.isFile())
         {
-            if(m_lstVideoFormat.contains(mfi.suffix()))
+            if(m_lstVideoFormat.contains(mfi.suffix(), Qt::CaseInsensitive))
             {
                 m_mapAllVideoPath.insert(mfi.size(), mfi.absoluteFilePath());
             }

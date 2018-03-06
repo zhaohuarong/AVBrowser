@@ -58,7 +58,7 @@ void Item::showImage()
     for(int i = lstImageInfo.count() - 1; i > 0; i --)
     {
         QFileInfo info = lstImageInfo.at(i);
-        if(m_lstImageFormat.contains(info.suffix()))
+        if(m_lstImageFormat.contains(info.suffix(), Qt::CaseInsensitive))
         {
             bHaveImage = true;
             ItemImageLabel *pLabel = new ItemImageLabel(this);
