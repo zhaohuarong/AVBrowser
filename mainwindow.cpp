@@ -78,7 +78,7 @@ void MainWindow::on_btnOpen_clicked()
     g_pSetting->setValue("lastDir", strDir);
     chakan(strDir);
 
-    QProgressDialog dlg("Loading...", "Abort Copy", 0, m_lstAllVideoPath.count(), this);
+    QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_lstAllVideoPath.count(), this);
     dlg.setWindowModality(Qt::WindowModal);
     dlg.show();
 
@@ -89,10 +89,11 @@ void MainWindow::on_btnOpen_clicked()
         if (dlg.wasCanceled())
             break;
         Item *pItem = new Item(this);
+        pItem->setIndex(index);
         pItem->setVideoPath(pathVideo);
         ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
         m_lstCurrentItems << pItem;
-        statusBar()->showMessage(QString("Total : %1").arg(index));
+        statusBar()->showMessage(tr("Total : %1").arg(index));
         qApp->processEvents();
     }
     dlg.setValue(m_lstAllVideoPath.count());

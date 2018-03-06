@@ -15,6 +15,7 @@ public:
     explicit Item(QWidget *parent = 0);
     ~Item();
 
+    void setIndex(int index) {m_nIndex = index;}
     void setVideoPath(const QString &path);
 
 protected:
@@ -31,6 +32,7 @@ private:
     Ui::Item *ui;
 
     QString m_strVideoPath;
+    int m_nIndex;
 };
 
 #endif // ITEM_H

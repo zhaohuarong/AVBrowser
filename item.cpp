@@ -15,7 +15,8 @@
 
 Item::Item(QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::Item)
+    ui(new Ui::Item),
+    m_nIndex(0)
 {
     ui->setupUi(this);
 
@@ -31,7 +32,7 @@ void Item::setVideoPath(const QString &path)
 {
     m_strVideoPath = path;
     QFileInfo mfi(path);
-    ui->pushButton->setText(QString("(%1MB)%2").arg(mfi.size() / 1024 / 1024).arg(mfi.fileName()));
+    ui->pushButton->setText(QString("%1.(%2MB)%3").arg(m_nIndex).arg(mfi.size() / 1024 / 1024).arg(mfi.fileName()));
 
     showImage(path);
 }
