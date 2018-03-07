@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QDebug>
 
+#include "setting.h"
 #include "itemimagelabel.h"
 #include "define.h"
 #include "item.h"
@@ -19,6 +20,10 @@ Item::Item(QWidget *parent) :
     m_nIndex(0)
 {
     ui->setupUi(this);
+
+    int nHeight = g_pSetting->value("ItemHeight").toInt();
+    if(nHeight != 0)
+        setFixedHeight(nHeight);
 
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(onPlayVideo()));
 }

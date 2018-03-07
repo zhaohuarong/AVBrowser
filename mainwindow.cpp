@@ -25,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle("Browser");
 
-    m_lstVideoFormat = g_pSetting->value("videoFormat").toString().split('|');
-    m_lstImageFormat = g_pSetting->value("imageFormat").toString().split('|');
+    m_lstVideoFormat = g_pSetting->value("VideoFormat").toString().split('|');
+    m_lstImageFormat = g_pSetting->value("ImageFormat").toString().split('|');
     qDebug() << "Video Format:" << m_lstVideoFormat;
     qDebug() << "Audio Format:" << m_lstImageFormat;
 }
@@ -65,7 +65,7 @@ void MainWindow::chakan(const QString &path)
 
 void MainWindow::on_btnOpen_clicked()
 {
-    QString strDir = QFileDialog::getExistingDirectory(this, "", g_pSetting->value("lastDir").toString());
+    QString strDir = QFileDialog::getExistingDirectory(this, "", g_pSetting->value("LastDir").toString());
     if(strDir.trimmed().isEmpty())
         return;
     m_mapAllVideoPath.clear();
@@ -75,7 +75,7 @@ void MainWindow::on_btnOpen_clicked()
         qDebug() << "delete";
     }
     m_lstCurrentItems.clear();
-    g_pSetting->setValue("lastDir", strDir);
+    g_pSetting->setValue("LastDir", strDir);
     chakan(strDir);
 
     QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_mapAllVideoPath.count(), this);
