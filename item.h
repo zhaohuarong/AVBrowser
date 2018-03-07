@@ -23,6 +23,9 @@ public:
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
 
+signals:
+    void sigCurrentVideoPath(const QString &path);
+
 private slots:
     void onPlayVideo();
     void onOpenDir();

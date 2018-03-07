@@ -81,6 +81,7 @@ void Item::showImage()
 void Item::onPlayVideo()
 {
     QDesktopServices::openUrl(QUrl::fromLocalFile(m_strVideoPath));
+    emit sigCurrentVideoPath(m_strVideoPath);
 }
 
 void Item::onOpenDir()

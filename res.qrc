@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>image/video.png</file>
         <file>image/open.png</file>
+        <file>image/move.png</file>
+        <file>image/snapshot.png</file>
     </qresource>
 </RCC>
