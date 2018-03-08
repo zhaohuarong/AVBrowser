@@ -87,6 +87,23 @@ void MainWindow::updateData()
     dlg.setWindowModality(Qt::WindowModal);
     dlg.show();
 
+    // check repeat
+    QString strMsg;
+    for(QMultiMap<long long, QString>::const_iterator iter1 = m_mapAllVideoPath.constBegin(); iter1 != m_mapAllVideoPath.constEnd(); iter1 ++)
+    {
+        for(QMultiMap<long long, QString>::const_iterator iter2 = iter1 + 1; iter2 != m_mapAllVideoPath.constEnd(); iter2 ++)
+        {
+            //if(iter1.key() == iter2.key())
+            if(QFileInfo(iter1.value()).dir().absolutePath() == QFileInfo(iter2.value()).dir().absolutePath())
+            {
+                strMsg = tr("%1 \ncontains multiple files.").arg(QFileInfo(iter1.value()).dir().absolutePath());
+            }
+        }
+    }
+    if(!strMsg.isEmpty())
+        QMessageBox::warning(this, "", strMsg);
+
+
     int index = 0;
     for(QMultiMap<long long, QString>::const_iterator iter = m_mapAllVideoPath.constEnd() - 1; iter != m_mapAllVideoPath.constBegin() - 1; iter --)
     {
