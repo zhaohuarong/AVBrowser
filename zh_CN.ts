@@ -80,13 +80,17 @@
 =
 %2
 </source>
-        <translation>%1\n=\n%2\n</translation>
+        <translation>%1
+=
+%2
+</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="102"/>
         <source>%1 
 contains multiple files.</source>
-        <translation>%1 \n包含重复文件.</translation>
+        <translation>%1 
+包含重复文件.</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="124"/>
@@ -118,7 +122,9 @@ contains multiple files.</source>
         <source>Total: %1
 Copy: %2
 Delete: %3</source>
-        <translation>总计: %1\n拷贝: %2\n删除: %3</translation>
+        <translation>总计: %1
+拷贝: %2
+删除: %3</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="191"/>
