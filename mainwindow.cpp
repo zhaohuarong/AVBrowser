@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->btnOpen->setToolTip(tr("Open video folder"));
     ui->btnSnapshotDir->setToolTip(tr("Select snapshot folder"));
     ui->btnMoveImage->setToolTip(tr("Move image from snapshot folder to video folder"));
+    ui->btnRefresh->setToolTip(tr("Refresh list"));
 
     m_lstVideoFormat = g_pSetting->value("VideoFormat").toString().split('|');
     m_lstImageFormat = g_pSetting->value("ImageFormat").toString().split('|');
