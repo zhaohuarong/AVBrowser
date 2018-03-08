@@ -70,11 +70,8 @@ void MainWindow::chakan(const QString &path)
     }
 }
 
-void MainWindow::on_btnOpen_clicked()
+void MainWindow::updateData()
 {
-    QString strDir = QFileDialog::getExistingDirectory(this, "Select Video Folder", g_pSetting->value("LastDir").toString()).trimmed();
-    if(strDir.isEmpty())
-        return;
     m_mapAllVideoPath.clear();
     foreach (Item *item, m_lstCurrentItems)
     {
@@ -82,8 +79,8 @@ void MainWindow::on_btnOpen_clicked()
         qDebug() << "delete";
     }
     m_lstCurrentItems.clear();
-    g_pSetting->setValue("LastDir", strDir);
-    chakan(strDir);
+    g_pSetting->setValue("LastDir", m_strCurrentDir);
+    chakan(m_strCurrentDir);
 
     QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_mapAllVideoPath.count(), this);
     dlg.setWindowModality(Qt::WindowModal);
@@ -107,6 +104,15 @@ void MainWindow::on_btnOpen_clicked()
         qApp->processEvents();
     }
     dlg.setValue(m_mapAllVideoPath.count());
+}
+
+void MainWindow::on_btnOpen_clicked()
+{
+    QString strDir = QFileDialog::getExistingDirectory(this, "Select Video Folder", g_pSetting->value("LastDir").toString()).trimmed();
+    if(strDir.isEmpty())
+        return;
+    m_strCurrentDir = strDir;
+    updateData();
 }
 
 void MainWindow::onCurrentPlayVideoChanged(const QString &path)
@@ -154,4 +160,14 @@ void MainWindow::on_btnMoveImage_clicked()
         QMessageBox::information(this, "", tr("Move %1 Images").arg(nCount));
     else
         QMessageBox::critical(this, "", tr("Total: %1\nCopy: %2\nDelete: %3").arg(nCount).arg(nCpy).arg(nDel));
+}
+
+void MainWindow::on_btnRefresh_clicked()
+{
+    if(!QFileInfo(m_strCurrentDir).isDir())
+    {
+        QMessageBox::critical(this, "", tr("No select dir"));
+        return;
+    }
+    updateData();
 }

@@ -25,16 +25,19 @@ protected:
 
 private:
     void chakan(const QString &path);
+    void updateData();
 
 private slots:
     void on_btnOpen_clicked();
     void on_btnSnapshotDir_clicked();
+    void on_btnRefresh_clicked();
     void on_btnMoveImage_clicked();
     void onCurrentPlayVideoChanged(const QString &path);
 
 private:
     Ui::MainWindow *ui;
     QMultiMap<long long, QString> m_mapAllVideoPath;
+    QString m_strCurrentDir;
     QList<Item *> m_lstCurrentItems;
     QString m_strCurrentPlayVideoPath;
     QString m_strSnapshotDir;

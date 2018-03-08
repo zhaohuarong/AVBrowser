@@ -4,5 +4,6 @@
         <file>image/open.png</file>
         <file>image/move.png</file>
         <file>image/snapshot.png</file>
+        <file>image/refresh.png</file>
     </qresource>
 </RCC>
