@@ -93,8 +93,11 @@ void MainWindow::updateData()
     {
         for(QMultiMap<long long, QString>::const_iterator iter2 = iter1 + 1; iter2 != m_mapAllVideoPath.constEnd(); iter2 ++)
         {
-            //if(iter1.key() == iter2.key())
-            if(QFileInfo(iter1.value()).dir().absolutePath() == QFileInfo(iter2.value()).dir().absolutePath())
+            if(iter1.key() == iter2.key())
+            {
+                strMsg = tr("%1\n=\n%2\n").arg(iter1.value()).arg(iter2.value());
+            }
+            else if(QFileInfo(iter1.value()).dir().absolutePath() == QFileInfo(iter2.value()).dir().absolutePath())
             {
                 strMsg = tr("%1 \ncontains multiple files.").arg(QFileInfo(iter1.value()).dir().absolutePath());
             }
