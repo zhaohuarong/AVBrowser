@@ -113,13 +113,14 @@ void MainWindow::on_btnOpen_clicked()
     if(strDir.isEmpty())
         return;
     m_strCurrentDir = strDir;
+    setWindowTitle(m_strCurrentDir);
     updateData();
 }
 
 void MainWindow::onCurrentPlayVideoChanged(const QString &path)
 {
     m_strCurrentPlayVideoPath = path;
-    setWindowTitle(m_strCurrentPlayVideoPath);
+    statusBar()->showMessage(m_strCurrentPlayVideoPath);
 }
 
 void MainWindow::on_btnSnapshotDir_clicked()
