@@ -5,5 +5,6 @@
         <file>image/move.png</file>
         <file>image/snapshot.png</file>
         <file>image/refresh.png</file>
+        <file>zh_CN.qm</file>
     </qresource>
 </RCC>

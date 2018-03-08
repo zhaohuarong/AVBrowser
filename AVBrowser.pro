@@ -27,4 +27,6 @@ FORMS    += mainwindow.ui \
 RESOURCES += \
     res.qrc
 
+TRANSLATIONS += $$PWD/zh_CN.ts
+
 RC_FILE = app.rc

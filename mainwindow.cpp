@@ -129,7 +129,7 @@ void MainWindow::updateData()
 
 void MainWindow::on_btnOpen_clicked()
 {
-    QString strDir = QFileDialog::getExistingDirectory(this, "Select Video Folder", g_pSetting->value("LastDir").toString()).trimmed();
+    QString strDir = QFileDialog::getExistingDirectory(this, tr("Select Video Folder"), g_pSetting->value("LastDir").toString()).trimmed();
     if(strDir.isEmpty())
         return;
     m_strCurrentDir = strDir;
@@ -145,7 +145,7 @@ void MainWindow::onCurrentPlayVideoChanged(const QString &path)
 
 void MainWindow::on_btnSnapshotDir_clicked()
 {
-    QString strDir = QFileDialog::getExistingDirectory(this, "Select Snapshot Folder", m_strSnapshotDir).trimmed();
+    QString strDir = QFileDialog::getExistingDirectory(this, tr("Select Snapshot Folder"), m_strSnapshotDir).trimmed();
     if(strDir.isEmpty())
         return;
     m_strSnapshotDir = strDir;
