@@ -83,10 +83,6 @@ void MainWindow::updateData()
     g_pSetting->setValue("LastDir", m_strCurrentDir);
     chakan(m_strCurrentDir);
 
-    QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_mapAllVideoPath.count(), this);
-    dlg.setWindowModality(Qt::WindowModal);
-    dlg.show();
-
     // check repeat
     QString strMsg;
     for(QMultiMap<long long, QString>::const_iterator iter1 = m_mapAllVideoPath.constBegin(); iter1 != m_mapAllVideoPath.constEnd(); iter1 ++)
@@ -106,6 +102,9 @@ void MainWindow::updateData()
     if(!strMsg.isEmpty())
         QMessageBox::warning(this, "", strMsg);
 
+    QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_mapAllVideoPath.count(), this);
+    dlg.setWindowModality(Qt::WindowModal);
+    dlg.show();
 
     int index = 0;
     for(QMultiMap<long long, QString>::const_iterator iter = m_mapAllVideoPath.constEnd() - 1; iter != m_mapAllVideoPath.constBegin() - 1; iter --)
