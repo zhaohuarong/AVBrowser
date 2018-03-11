@@ -84,23 +84,32 @@ void MainWindow::updateData()
     chakan(m_strCurrentDir);
 
     // check repeat
-    QString strMsg;
+    QString strMsg, path1, path2;
     for(QMultiMap<long long, QString>::const_iterator iter1 = m_mapAllVideoPath.constBegin(); iter1 != m_mapAllVideoPath.constEnd(); iter1 ++)
     {
         for(QMultiMap<long long, QString>::const_iterator iter2 = iter1 + 1; iter2 != m_mapAllVideoPath.constEnd(); iter2 ++)
         {
+            path1 = QFileInfo(iter1.value()).dir().absolutePath();
+            path2 = QFileInfo(iter2.value()).dir().absolutePath();
             if(iter1.key() == iter2.key())
             {
                 strMsg = tr("%1\n=\n%2\n").arg(iter1.value()).arg(iter2.value());
             }
-            else if(QFileInfo(iter1.value()).dir().absolutePath() == QFileInfo(iter2.value()).dir().absolutePath())
+            else if(path1 == path2)
             {
-                strMsg = tr("%1 \ncontains multiple files.").arg(QFileInfo(iter1.value()).dir().absolutePath());
+                strMsg = tr("%1 \ncontains multiple files.").arg(path1);
             }
         }
     }
     if(!strMsg.isEmpty())
+    {
         QMessageBox::warning(this, "", strMsg);
+        if(!path1.isEmpty())
+            QDesktopServices::openUrl(QUrl::fromLocalFile(path1));
+        if(!path2.isEmpty())
+            QDesktopServices::openUrl(QUrl::fromLocalFile(path2));
+        return;
+    }
 
     QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_mapAllVideoPath.count(), this);
     dlg.setWindowModality(Qt::WindowModal);
