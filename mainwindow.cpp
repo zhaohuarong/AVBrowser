@@ -94,12 +94,16 @@ void MainWindow::updateData()
             if(iter1.key() == iter2.key())
             {
                 strMsg = tr("%1\n=\n%2\n").arg(iter1.value()).arg(iter2.value());
+                break;
             }
             else if(path1 == path2)
             {
                 strMsg = tr("%1 \ncontains multiple files.").arg(path1);
+                break;
             }
         }
+        if(!strMsg.isEmpty())
+            break;
     }
     if(!strMsg.isEmpty())
     {
