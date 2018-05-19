@@ -70,6 +70,7 @@ void Item::showImage()
             ui->imageLayout->insertWidget(0, pLabel);
             pLabel->setImagePath(info.absoluteFilePath());
             index ++;
+            qApp->processEvents();
         }
     }
 

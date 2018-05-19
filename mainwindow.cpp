@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowTitle("Browser");
+    setWindowTitle("AVBrowser");
 
     ui->btnOpen->setToolTip(tr("Open video folder"));
     ui->btnSnapshotDir->setToolTip(tr("Select snapshot folder"));
@@ -35,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
     m_lstImageFormat = g_pSetting->value("ImageFormat").toString().split('|');
     m_strSnapshotDir = g_pSetting->value("SnapshotDir").toString();
     ui->lblSnapshot->setText(m_strSnapshotDir);
+
+    m_strCurrentDir = g_pSetting->value("LastDir").toString();;
+    ui->lblOpenDir->setText(m_strCurrentDir);
+
     qDebug() << "Video Format:" << m_lstVideoFormat;
     qDebug() << "Audio Format:" << m_lstImageFormat;
 }
@@ -116,6 +120,7 @@ void MainWindow::updateData()
     }
 
     QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_mapAllVideoPath.count(), this);
+    dlg.resize(500, 10);
     dlg.setWindowModality(Qt::WindowModal);
     dlg.show();
 
@@ -145,7 +150,7 @@ void MainWindow::on_btnOpen_clicked()
     if(strDir.isEmpty())
         return;
     m_strCurrentDir = strDir;
-    setWindowTitle(m_strCurrentDir);
+    ui->lblOpenDir->setText(m_strCurrentDir);
     updateData();
 }
 
