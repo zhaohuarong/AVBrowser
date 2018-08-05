@@ -41,6 +41,7 @@ private:
     QList<Item *> m_lstCurrentItems;
     QString m_strCurrentPlayVideoPath;
     QString m_strSnapshotDir;
+    QStringList m_lstAllSuffix; //all file tpye list
 };
 
 #endif // MAINWINDOW_H

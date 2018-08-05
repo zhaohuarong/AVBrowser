@@ -60,6 +60,8 @@ void MainWindow::chakan(const QString &path)
     {
         if(mfi.isFile())
         {
+            if(!m_lstAllSuffix.contains(mfi.suffix()))
+                m_lstAllSuffix.append(mfi.suffix());
             if(m_lstVideoFormat.contains(mfi.suffix(), Qt::CaseInsensitive))
             {
                 m_mapAllVideoPath.insert(mfi.size(), mfi.absoluteFilePath());
@@ -78,6 +80,7 @@ void MainWindow::chakan(const QString &path)
 void MainWindow::updateData()
 {
     m_mapAllVideoPath.clear();
+    m_lstAllSuffix.clear();
     foreach (Item *item, m_lstCurrentItems)
     {
         delete item;
@@ -138,7 +141,7 @@ void MainWindow::updateData()
         pItem->showImage();
         ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
         m_lstCurrentItems << pItem;
-        statusBar()->showMessage(tr("Total : %1").arg(index));
+        statusBar()->showMessage(tr("Total : %1(%2)").arg(index).arg(m_lstAllSuffix.join(",")));
         qApp->processEvents();
     }
     dlg.setValue(m_mapAllVideoPath.count());
