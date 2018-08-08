@@ -29,6 +29,10 @@ signals:
 private slots:
     void onPlayVideo();
     void onOpenDir();
+    void onReloadImage();
+
+private:
+    void cleanImage();
 
 private:
     Ui::Item *ui;
