@@ -58,6 +58,9 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
 
 void Item::showImage()
 {
+    // set default item height
+    setFixedHeight(ui->pushButton->height());
+
     ui->pushButton->setText(QString("%1.(%2MB)%3").arg(m_nIndex).arg(m_nSize / 1024 / 1024).arg(QFileInfo(m_strVideoPath).fileName()));
 
     QFileInfoList lstImageInfo = QFileInfo(m_strVideoPath).dir().entryInfoList();
@@ -68,7 +71,12 @@ void Item::showImage()
         QFileInfo info = lstImageInfo.at(i);
         if(m_lstImageFormat.contains(info.suffix(), Qt::CaseInsensitive))
         {
-            bHaveImage = true;
+            if(!bHaveImage)
+            {
+                bHaveImage = true;
+                // change item height
+                setFixedHeight(245);
+            }
             ItemImageLabel *pLabel = new ItemImageLabel(this);
             ui->imageLayout->insertWidget(0, pLabel);
             pLabel->setImagePath(info.absoluteFilePath());
@@ -77,8 +85,10 @@ void Item::showImage()
         }
     }
 
-    if(!bHaveImage)
-        setFixedHeight(ui->pushButton->height());
+//    if(!bHaveImage)
+//        setFixedHeight(ui->pushButton->height());
+//    else
+//        setFixedHeight(245);
     ui->pushButton->setStyleSheet(QString("text-align: left; background-color: %1;").arg(bHaveImage ? "rgb(0, 255, 0)" : "rgb(255, 0, 0)"));
 }
 
