@@ -45,6 +45,7 @@
     <widget class="QPushButton" name="pushButton">
      <property name="font">
       <font>
+       <pointsize>11</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>

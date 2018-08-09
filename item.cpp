@@ -59,7 +59,7 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
 void Item::showImage()
 {
     // set default item height
-    setFixedHeight(30);
+    setFixedHeight(26);
 
     ui->pushButton->setText(QString("%1.(%2MB)%3").arg(m_nIndex).arg(m_nSize / 1024 / 1024).arg(QFileInfo(m_strVideoPath).fileName()));
 
