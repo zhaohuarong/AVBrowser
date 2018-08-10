@@ -1,3 +1,4 @@
+#include <QScrollBar>
 #include <QMessageBox>
 #include <QMenu>
 #include <QProcess>
@@ -143,6 +144,9 @@ void MainWindow::updateData()
         m_lstCurrentItems << pItem;
         statusBar()->showMessage(tr("Total : %1(%2)").arg(index).arg(m_lstAllSuffix.join(",")));
         qApp->processEvents();
+
+        // scroll to end
+        ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->maximum());
     }
     dlg.setValue(m_mapAllVideoPath.count());
 }
