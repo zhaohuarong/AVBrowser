@@ -21,7 +21,8 @@ QStringList m_lstImageFormat;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_pCurrentItem(NULL)
 {
     ui->setupUi(this);
 
@@ -135,7 +136,7 @@ void MainWindow::updateData()
         if (dlg.wasCanceled())
             break;
         Item *pItem = new Item(this);
-        connect(pItem, SIGNAL(sigCurrentVideoPath(QString)), this, SLOT(onCurrentPlayVideoChanged(QString)));
+        connect(pItem, SIGNAL(sigCurrentVideoPath(Item *)), this, SLOT(onCurrentPlayVideoChanged(Item *)));
         pItem->setIndex(index);
         pItem->setSize(iter.key());
         pItem->setVideoPath(iter.value());
@@ -161,10 +162,10 @@ void MainWindow::on_btnOpen_clicked()
     updateData();
 }
 
-void MainWindow::onCurrentPlayVideoChanged(const QString &path)
+void MainWindow::onCurrentPlayVideoChanged(Item *item)
 {
-    m_strCurrentPlayVideoPath = path;
-    statusBar()->showMessage(m_strCurrentPlayVideoPath);
+    m_pCurrentItem = item;
+    statusBar()->showMessage(m_pCurrentItem->getVideoPath());
 }
 
 void MainWindow::on_btnSnapshotDir_clicked()
@@ -179,7 +180,9 @@ void MainWindow::on_btnSnapshotDir_clicked()
 
 void MainWindow::on_btnMoveImage_clicked()
 {
-    if(!QFileInfo(m_strSnapshotDir).isDir() || !QFileInfo(m_strCurrentPlayVideoPath).isFile())
+    if(m_pCurrentItem == NULL || m_strSnapshotDir.isEmpty())
+        return;
+    if(!QFileInfo(m_strSnapshotDir).isDir() || !QFileInfo(m_pCurrentItem->getVideoPath()).isFile())
     {
         QMessageBox::critical(this, "", tr("src or dst is no exists"));
         return;
@@ -194,7 +197,7 @@ void MainWindow::on_btnMoveImage_clicked()
         if(!m_lstImageFormat.contains(info.suffix()))
             continue;
         QFile imageFile(info.absoluteFilePath());
-        bool bCpy = imageFile.copy(QFileInfo(m_strCurrentPlayVideoPath).dir().absolutePath() + "/" + info.fileName());
+        bool bCpy = imageFile.copy(QFileInfo(m_pCurrentItem->getVideoPath()).dir().absolutePath() + "/" + info.fileName());
         bool bDel = imageFile.remove();
         nCount ++;
         if(bCpy)
@@ -206,6 +209,7 @@ void MainWindow::on_btnMoveImage_clicked()
         QMessageBox::information(this, "", tr("Move %1 Images").arg(nCount));
     else
         QMessageBox::critical(this, "", tr("Total: %1\nCopy: %2\nDelete: %3").arg(nCount).arg(nCpy).arg(nDel));
+    m_pCurrentItem->onReloadImage();
 }
 
 void MainWindow::on_btnRefresh_clicked()

@@ -17,19 +17,22 @@ public:
 
     void setIndex(int index) {m_nIndex = index;}
     void setVideoPath(const QString &path);
+    QString getVideoPath() {return m_strVideoPath;}
     void setSize(long long nSize){m_nSize = nSize;}
     void showImage();
+
+public slots:
+    void onReloadImage();
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
 
 signals:
-    void sigCurrentVideoPath(const QString &path);
+    void sigCurrentVideoPath(Item *item);
 
 private slots:
     void onPlayVideo();
     void onOpenDir();
-    void onReloadImage();
 
 private:
     void cleanImage();

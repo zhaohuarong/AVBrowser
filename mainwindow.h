@@ -32,14 +32,15 @@ private slots:
     void on_btnSnapshotDir_clicked();
     void on_btnRefresh_clicked();
     void on_btnMoveImage_clicked();
-    void onCurrentPlayVideoChanged(const QString &path);
+    void onCurrentPlayVideoChanged(Item *item);
 
 private:
     Ui::MainWindow *ui;
     QMultiMap<long long, QString> m_mapAllVideoPath;
     QString m_strCurrentDir;
     QList<Item *> m_lstCurrentItems;
-    QString m_strCurrentPlayVideoPath;
+    //QString m_strCurrentPlayVideoPath;
+    Item *m_pCurrentItem;
     QString m_strSnapshotDir;
     QStringList m_lstAllSuffix; //all file tpye list
 };
