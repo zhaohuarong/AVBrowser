@@ -126,6 +126,7 @@ void MainWindow::updateData()
 
     QProgressDialog dlg(tr("Loading..."), tr("Abort"), 0, m_mapAllVideoPath.count(), this);
     dlg.resize(500, 10);
+    //dlg.setLabelText(QString("%1/%2").arg(0).arg(m_mapAllVideoPath.count()));
     dlg.setWindowModality(Qt::WindowModal);
     dlg.show();
 
@@ -143,13 +144,15 @@ void MainWindow::updateData()
         pItem->showImage();
         ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
         m_lstCurrentItems << pItem;
-        statusBar()->showMessage(tr("Total : %1(%2)").arg(index).arg(m_lstAllSuffix.join(",")));
+        statusBar()->showMessage(tr("Total : %1/%2(%3)").arg(index).arg(m_mapAllVideoPath.count()).arg(m_lstAllSuffix.join(",")));
+        dlg.setLabelText(QString("%1/%2").arg(index).arg(m_mapAllVideoPath.count()));
         qApp->processEvents();
 
         // scroll to end
         ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->maximum());
     }
     dlg.setValue(m_mapAllVideoPath.count());
+    ui->scrollArea->verticalScrollBar()->setValue(0);
 }
 
 void MainWindow::on_btnOpen_clicked()
