@@ -96,6 +96,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="chkBest">
+         <property name="text">
+          <string>(精)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QToolButton" name="btnSnapshotDir">
          <property name="text">
           <string>O</string>

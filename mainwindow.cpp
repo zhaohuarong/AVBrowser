@@ -66,6 +66,8 @@ void MainWindow::chakan(const QString &path)
                 m_lstAllSuffix.append(mfi.suffix());
             if(m_lstVideoFormat.contains(mfi.suffix(), Qt::CaseInsensitive))
             {
+                if(ui->chkBest->isChecked() && !mfi.fileName().contains("(精)"))
+                    continue;
                 m_mapAllVideoPath.insert(mfi.size(), mfi.absoluteFilePath());
             }
             qApp->processEvents();
@@ -223,4 +225,10 @@ void MainWindow::on_btnRefresh_clicked()
         return;
     }
     updateData();
+}
+
+void MainWindow::on_chkBest_toggled(bool checked)
+{
+    Q_UNUSED(checked);
+    on_btnRefresh_clicked();
 }

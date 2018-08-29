@@ -33,6 +33,7 @@ private slots:
     void on_btnRefresh_clicked();
     void on_btnMoveImage_clicked();
     void onCurrentPlayVideoChanged(Item *item);
+    void on_chkBest_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
