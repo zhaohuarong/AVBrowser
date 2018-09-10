@@ -45,13 +45,16 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     QAction actPlayVideo(QIcon(":/image/video.png"), tr("Play Video"), &menu);
     QAction actOpenDir(QIcon(":/image/open.png"), tr("Open Dir"), &menu);
     QAction actReloadImage(QIcon(":/image/refresh.png"), tr("Reload Image"), &menu);
+    QAction actRemove(QIcon(":/image/delete.png"), tr("Remove Item"), &menu);
     connect(&actPlayVideo, SIGNAL(triggered()), this, SLOT(onPlayVideo()));
     connect(&actOpenDir, SIGNAL(triggered()), this, SLOT(onOpenDir()));
     connect(&actReloadImage, SIGNAL(triggered()), this, SLOT(onReloadImage()));
+    connect(&actRemove, SIGNAL(triggered()), this, SLOT(onRemoveItem()));
 
     menu.addAction(&actPlayVideo);
     menu.addAction(&actOpenDir);
     menu.addAction(&actReloadImage);
+    menu.addAction(&actRemove);
     menu.move(cursor().pos());
     menu.exec();
 }
@@ -101,6 +104,11 @@ void Item::onPlayVideo()
 void Item::onOpenDir()
 {
     QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(m_strVideoPath).dir().absolutePath()));
+}
+
+void Item::onRemoveItem()
+{
+    emit sigRemoveItem(this);
 }
 
 void Item::cleanImage()

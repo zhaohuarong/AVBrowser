@@ -140,6 +140,7 @@ void MainWindow::updateData()
             break;
         Item *pItem = new Item(this);
         connect(pItem, SIGNAL(sigCurrentVideoPath(Item *)), this, SLOT(onCurrentPlayVideoChanged(Item *)));
+        connect(pItem, SIGNAL(sigRemoveItem(Item*)), this, SLOT(onRemoveItem(Item *)));
         pItem->setIndex(index);
         pItem->setSize(iter.key());
         pItem->setVideoPath(iter.value());
@@ -171,6 +172,14 @@ void MainWindow::onCurrentPlayVideoChanged(Item *item)
 {
     m_pCurrentItem = item;
     statusBar()->showMessage(m_pCurrentItem->getVideoPath());
+}
+
+void MainWindow::onRemoveItem(Item *item)
+{
+    if(item == NULL)
+        return;
+    qDebug() << "delete" << item->getVideoPath();
+    ui->scrollAreaWidgetContents->layout()->removeWidget(item);
 }
 
 void MainWindow::on_btnSnapshotDir_clicked()

@@ -29,10 +29,12 @@ protected:
 
 signals:
     void sigCurrentVideoPath(Item *item);
+    void sigRemoveItem(Item *item);
 
 private slots:
     void onPlayVideo();
     void onOpenDir();
+    void onRemoveItem();
 
 private:
     void cleanImage();
