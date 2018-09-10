@@ -179,7 +179,10 @@ void MainWindow::onRemoveItem(Item *item)
     if(item == NULL)
         return;
     qDebug() << "delete" << item->getVideoPath();
+    item->hide();
+//    item->setParent(NULL);
     ui->scrollAreaWidgetContents->layout()->removeWidget(item);
+    ui->scrollArea->horizontalScrollBar()->setValue(0);
 }
 
 void MainWindow::on_btnSnapshotDir_clicked()

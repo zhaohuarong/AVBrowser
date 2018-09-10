@@ -21,7 +21,7 @@ Item::Item(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setStyleSheet("background: lightgray;");
+    //setStyleSheet("background: lightgray;");
 
     int nHeight = g_pSetting->value("ItemHeight").toInt();
     if(nHeight != 0)
