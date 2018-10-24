@@ -1,3 +1,4 @@
+#include <QCloseEvent>
 #include <QScrollBar>
 #include <QMessageBox>
 #include <QMenu>
@@ -22,7 +23,11 @@ QStringList m_lstImageFormat;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_pCurrentItem(NULL)
+    m_pCurrentItem(NULL),
+    m_pSysTrayIcon(NULL),
+    m_pTrayMenu(NULL),
+    m_pActionShow(NULL),
+    m_pActionQuit(NULL)
 {
     ui->setupUi(this);
 
@@ -43,6 +48,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qDebug() << "Video Format:" << m_lstVideoFormat;
     qDebug() << "Audio Format:" << m_lstImageFormat;
+
+    // create tray
+    m_pTrayMenu = new QMenu(this);
+    m_pActionShow = new QAction(QIcon(":/image/show.png"), tr("Show/Hide"));
+    m_pActionQuit = new QAction(QIcon(":/image/quit.png"), tr("Quit"));
+    connect(m_pActionShow, SIGNAL(triggered()), this, SLOT(show()));
+    connect(m_pActionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    m_pTrayMenu->addAction(m_pActionShow);
+    m_pTrayMenu->addAction(m_pActionQuit);
+    m_pSysTrayIcon = new QSystemTrayIcon(this);
+    connect(m_pSysTrayIcon , SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(onTrayActivated(QSystemTrayIcon::ActivationReason)));
+    QIcon icon = QIcon(":/image/icon.png");
+    m_pSysTrayIcon->setIcon(icon);
+    m_pSysTrayIcon->setContextMenu(m_pTrayMenu);
+    m_pSysTrayIcon->show();
 }
 
 MainWindow::~MainWindow()
@@ -53,6 +73,13 @@ MainWindow::~MainWindow()
 void MainWindow::resizeEvent(QResizeEvent *e)
 {
     Q_UNUSED(e);
+}
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    hide();
+    m_pSysTrayIcon->showMessage(tr("Tips"), tr("Minimized to tray"));
+    e->ignore();
 }
 
 void MainWindow::chakan(const QString &path)
@@ -243,4 +270,16 @@ void MainWindow::on_chkBest_toggled(bool checked)
 {
     Q_UNUSED(checked);
     on_btnRefresh_clicked();
+}
+
+void MainWindow::onTrayActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch(reason)
+    {
+    case QSystemTrayIcon::Trigger:
+        break;
+    case QSystemTrayIcon::DoubleClick:
+        isHidden() ? show() : hide();
+        break;
+    }
 }

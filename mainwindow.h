@@ -3,6 +3,7 @@
 
 #include <QMultiMap>
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 class QListWidgetItem;
 
@@ -22,6 +23,7 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *e);
+    void closeEvent(QCloseEvent *e);
 
 private:
     void chakan(const QString &path);
@@ -35,6 +37,7 @@ private slots:
     void onCurrentPlayVideoChanged(Item *item);
     void onRemoveItem(Item *item);
     void on_chkBest_toggled(bool checked);
+    void onTrayActivated(QSystemTrayIcon::ActivationReason reason);
 
 private:
     Ui::MainWindow *ui;
@@ -45,6 +48,10 @@ private:
     Item *m_pCurrentItem;
     QString m_strSnapshotDir;
     QStringList m_lstAllSuffix; //all file tpye list
+    QSystemTrayIcon *m_pSysTrayIcon;
+    QMenu *m_pTrayMenu;
+    QAction *m_pActionShow;
+    QAction *m_pActionQuit;
 };
 
 #endif // MAINWINDOW_H

@@ -7,5 +7,8 @@
         <file>image/refresh.png</file>
         <file>zh_CN.qm</file>
         <file>image/delete.png</file>
+        <file>image/icon.png</file>
+        <file>image/quit.png</file>
+        <file>image/show.png</file>
     </qresource>
 </RCC>
