@@ -24,6 +24,7 @@ public:
 protected:
     void resizeEvent(QResizeEvent *e);
     void closeEvent(QCloseEvent *e);
+    void keyPressEvent(QKeyEvent *e);
 
 private:
     void chakan(const QString &path);

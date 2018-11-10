@@ -33,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle("AVBrowser");
 
+    setWindowFlags(windowFlags() & ~Qt::WindowMinimizeButtonHint);
+
     ui->btnOpen->setToolTip(tr("Open video folder"));
     ui->btnSnapshotDir->setToolTip(tr("Select snapshot folder"));
     ui->btnMoveImage->setToolTip(tr("Move image from snapshot folder to video folder"));
@@ -80,6 +82,16 @@ void MainWindow::closeEvent(QCloseEvent *e)
     hide();
     m_pSysTrayIcon->showMessage(tr("Tips"), tr("Minimized to tray"));
     e->ignore();
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *e)
+{
+    switch(e->key())
+    {
+    case Qt::Key_Escape:
+        close();
+        break;
+    }
 }
 
 void MainWindow::chakan(const QString &path)
@@ -277,9 +289,9 @@ void MainWindow::onTrayActivated(QSystemTrayIcon::ActivationReason reason)
     switch(reason)
     {
     case QSystemTrayIcon::Trigger:
+        isHidden() ? show() : hide();
         break;
     case QSystemTrayIcon::DoubleClick:
-        isHidden() ? show() : hide();
         break;
     }
 }
