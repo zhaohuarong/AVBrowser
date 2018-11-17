@@ -20,6 +20,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    static bool deleteDir(const QString &dirName);
 
 protected:
     void resizeEvent(QResizeEvent *e);
