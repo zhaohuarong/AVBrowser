@@ -10,6 +10,7 @@ public:
     explicit ItemImageLabel(QWidget *parent = nullptr);
 
     void setImagePath(const QString &path);
+    QString getImagePath() {return m_strImagePath;}
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *e);

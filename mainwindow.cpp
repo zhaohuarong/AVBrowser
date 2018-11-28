@@ -194,7 +194,7 @@ void MainWindow::updateData()
         ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->maximum());
     }
     dlg.setValue(m_mapAllVideoPath.count());
-    ui->scrollArea->verticalScrollBar()->setValue(0);
+    //ui->scrollArea->verticalScrollBar()->setValue(0);
 }
 
 void MainWindow::on_btnOpen_clicked()
@@ -218,17 +218,15 @@ void MainWindow::onRemoveItem(Item *item)
     if(item == NULL)
         return;
 
-    QMessageBox::StandardButton btn = QMessageBox::question(this, tr("question"), tr("Are you sure delete this folder?"), QMessageBox::Yes | QMessageBox::No);
-    if(btn == QMessageBox::No)
-        return;
+//    QMessageBox::StandardButton btn = QMessageBox::question(this, tr("question"), tr("Are you sure delete this folder?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+//    if(btn == QMessageBox::No)
+//        return;
 
-    QFileInfo info(item->getVideoPath());
+//    QFileInfo info(item->getVideoPath());
 
-//    qDebug() << "delete" << item->getVideoPath() << info.absolutePath();
-    bool b = deleteDir(info.absolutePath());
-    m_pSysTrayIcon->showMessage(tr("tip"), b ? tr("Success") : tr("Failure"));
+//    bool b = deleteDir(info.absolutePath());
+//    m_pSysTrayIcon->showMessage(tr("tip"), b ? tr("Success") : tr("Failure"));
     item->hide();
-//    item->setParent(NULL);
     ui->scrollAreaWidgetContents->layout()->removeWidget(item);
     ui->scrollArea->horizontalScrollBar()->setValue(0);
 }

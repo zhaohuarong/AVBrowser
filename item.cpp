@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QAction>
@@ -8,6 +9,7 @@
 #include <QFileInfo>
 #include <QDebug>
 
+#include "dialogresizepicture.h"
 #include "setting.h"
 #include "itemimagelabel.h"
 #include "define.h"
@@ -46,15 +48,18 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     QMenu menu(this);
     QAction actPlayVideo(QIcon(":/image/video.png"), tr("Play Video"), &menu);
     QAction actOpenDir(QIcon(":/image/open.png"), tr("Open Dir"), &menu);
+    QAction actChangePictureSize(QIcon(":/image/resize.png"), tr("Change Picture Size"), &menu);
     QAction actReloadImage(QIcon(":/image/refresh.png"), tr("Reload Image"), &menu);
     QAction actRemove(QIcon(":/image/delete.png"), tr("Remove Item"), &menu);
     connect(&actPlayVideo, SIGNAL(triggered()), this, SLOT(onPlayVideo()));
     connect(&actOpenDir, SIGNAL(triggered()), this, SLOT(onOpenDir()));
+    connect(&actChangePictureSize, SIGNAL(triggered()), this, SLOT(onChangePictureSize()));
     connect(&actReloadImage, SIGNAL(triggered()), this, SLOT(onReloadImage()));
     connect(&actRemove, SIGNAL(triggered()), this, SLOT(onRemoveItem()));
 
     menu.addAction(&actPlayVideo);
     menu.addAction(&actOpenDir);
+    menu.addAction(&actChangePictureSize);
     menu.addAction(&actReloadImage);
     menu.addAction(&actRemove);
     menu.move(cursor().pos());
@@ -111,6 +116,42 @@ void Item::onOpenDir()
 void Item::onRemoveItem()
 {
     emit sigRemoveItem(this);
+}
+
+void Item::onChangePictureSize()
+{
+    QStringList lstImagePath;
+    QObjectList lstObject = children();
+    foreach(QObject *obj, lstObject)
+    {
+        ItemImageLabel *item = qobject_cast<ItemImageLabel *>(obj);
+        if(item != NULL)
+        {
+            lstImagePath << item->getImagePath();
+        }
+    }
+
+    if(lstImagePath.count() <= 0)
+    {
+        QMessageBox::warning(NULL, tr("warning"), tr("No Images"));
+        return;
+    }
+
+    QImage img(lstImagePath.at(0));
+    DialogResizePicture dlg(NULL);
+    dlg.setImage(img);
+    dlg.setWidthAndHeightValue(img.width(), img.height());
+    if(dlg.exec() != QDialog::Accepted)
+        return;
+    //QSize wh = dlg.getWidthAndHeightValue();
+    QRect rect = dlg.getRect();
+    foreach(QString strPath, lstImagePath)
+    {
+        QImage orgImg(strPath);
+        QImage scaledImg = orgImg.copy(rect);
+        scaledImg.save(strPath);
+    }
+    onReloadImage();
 }
 
 void Item::cleanImage()

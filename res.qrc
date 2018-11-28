@@ -10,5 +10,6 @@
         <file>image/icon.png</file>
         <file>image/quit.png</file>
         <file>image/show.png</file>
+        <file>image/resize.png</file>
     </qresource>
 </RCC>

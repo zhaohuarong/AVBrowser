@@ -35,6 +35,7 @@ private slots:
     void onPlayVideo();
     void onOpenDir();
     void onRemoveItem();
+    void onChangePictureSize();
 
 private:
     void cleanImage();
