@@ -36,6 +36,7 @@ private slots:
     void onOpenDir();
     void onRemoveItem();
     void onChangePictureSize();
+    void onRemoveImage();
 
 private:
     void cleanImage();
@@ -46,6 +47,7 @@ private:
     QString m_strVideoPath;
     int m_nIndex;
     long long m_nSize;
+    QString m_strCurrentImageLabel;
 };
 
 #endif // ITEM_H

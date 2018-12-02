@@ -11,5 +11,6 @@
         <file>image/quit.png</file>
         <file>image/show.png</file>
         <file>image/resize.png</file>
+        <file>image/delete_img.png</file>
     </qresource>
 </RCC>

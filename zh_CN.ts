@@ -24,17 +24,17 @@
         <translation>高：</translation>
     </message>
     <message>
-        <location filename="dialogresizepicture.ui" line="64"/>
+        <location filename="dialogresizepicture.ui" line="77"/>
         <source>priview</source>
         <translation>预览</translation>
     </message>
     <message>
-        <location filename="dialogresizepicture.ui" line="89"/>
+        <location filename="dialogresizepicture.ui" line="102"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="dialogresizepicture.ui" line="96"/>
+        <location filename="dialogresizepicture.ui" line="109"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -52,37 +52,42 @@
         <translation>按钮</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="49"/>
+        <location filename="item.cpp" line="71"/>
         <source>Play Video</source>
         <translation>播放视频</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="50"/>
+        <location filename="item.cpp" line="72"/>
         <source>Open Dir</source>
         <translation>打开文件夹</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="51"/>
+        <location filename="item.cpp" line="73"/>
         <source>Change Picture Size</source>
         <translation>调整图片尺寸</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="52"/>
+        <location filename="item.cpp" line="74"/>
         <source>Reload Image</source>
         <translation>重新加载图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="53"/>
+        <location filename="item.cpp" line="75"/>
+        <source>Remove Image</source>
+        <translation>删除图片</translation>
+    </message>
+    <message>
+        <location filename="item.cpp" line="76"/>
         <source>Remove Item</source>
         <translation>移除该项</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="136"/>
+        <location filename="item.cpp" line="161"/>
         <source>warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="136"/>
+        <location filename="item.cpp" line="161"/>
         <source>No Images</source>
         <translation>没有图片</translation>
     </message>

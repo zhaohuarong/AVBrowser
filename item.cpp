@@ -1,3 +1,4 @@
+#include <QRect>
 #include <QMessageBox>
 #include <QContextMenuEvent>
 #include <QMenu>
@@ -44,23 +45,47 @@ void Item::setVideoPath(const QString &path)
 
 void Item::contextMenuEvent(QContextMenuEvent *e)
 {
+    QPoint p = e->pos();
+
+    QMap<ItemImageLabel *, QRect> mapAllImageRect;
+    foreach(QObject *pObj, this->children())
+    {
+        ItemImageLabel *pLbl = qobject_cast<ItemImageLabel *>(pObj);
+        if(pLbl != NULL)
+        {
+            mapAllImageRect.insert(pLbl, QRect(pLbl->pos(), pLbl->size()));
+        }
+    }
+
+    for(QMap<ItemImageLabel *, QRect>::const_iterator iter = mapAllImageRect.constBegin(); iter != mapAllImageRect.constEnd(); iter ++)
+    {
+        if(iter.value().contains(p))
+        {
+            m_strCurrentImageLabel = iter.key()->getImagePath();
+            break;
+        }
+    }
+
     e->accept();
     QMenu menu(this);
     QAction actPlayVideo(QIcon(":/image/video.png"), tr("Play Video"), &menu);
     QAction actOpenDir(QIcon(":/image/open.png"), tr("Open Dir"), &menu);
     QAction actChangePictureSize(QIcon(":/image/resize.png"), tr("Change Picture Size"), &menu);
     QAction actReloadImage(QIcon(":/image/refresh.png"), tr("Reload Image"), &menu);
+    QAction actRemoveImage(QIcon(":/image/delete_img.png"), tr("Remove Image"), &menu);
     QAction actRemove(QIcon(":/image/delete.png"), tr("Remove Item"), &menu);
     connect(&actPlayVideo, SIGNAL(triggered()), this, SLOT(onPlayVideo()));
     connect(&actOpenDir, SIGNAL(triggered()), this, SLOT(onOpenDir()));
     connect(&actChangePictureSize, SIGNAL(triggered()), this, SLOT(onChangePictureSize()));
     connect(&actReloadImage, SIGNAL(triggered()), this, SLOT(onReloadImage()));
+    connect(&actRemoveImage, SIGNAL(triggered()), this, SLOT(onRemoveImage()));
     connect(&actRemove, SIGNAL(triggered()), this, SLOT(onRemoveItem()));
 
     menu.addAction(&actPlayVideo);
     menu.addAction(&actOpenDir);
     menu.addAction(&actChangePictureSize);
     menu.addAction(&actReloadImage);
+    menu.addAction(&actRemoveImage);
     menu.addAction(&actRemove);
     menu.move(cursor().pos());
     menu.exec();
@@ -152,6 +177,20 @@ void Item::onChangePictureSize()
         scaledImg.save(strPath);
     }
     onReloadImage();
+}
+
+void Item::onRemoveImage()
+{
+    QFileInfo fileInfo(m_strCurrentImageLabel);
+    if(fileInfo.isFile() || fileInfo.isSymLink())
+    {
+        QFile::setPermissions(m_strCurrentImageLabel, QFile::WriteOwner);
+        if(QFile::remove(m_strCurrentImageLabel))
+        {
+            //qDebug() << "remove file" << filePath << " faild!";
+            onReloadImage();
+        }
+    }
 }
 
 void Item::cleanImage()
