@@ -204,7 +204,7 @@ void MainWindow::on_btnOpen_clicked()
         return;
     m_strCurrentDir = strDir;
     ui->lblOpenDir->setText(m_strCurrentDir);
-    updateData();
+    //updateData();
 }
 
 void MainWindow::onCurrentPlayVideoChanged(Item *item)
@@ -288,7 +288,7 @@ void MainWindow::on_btnRefresh_clicked()
 void MainWindow::on_chkBest_toggled(bool checked)
 {
     Q_UNUSED(checked);
-    on_btnRefresh_clicked();
+    //on_btnRefresh_clicked();
 }
 
 void MainWindow::onTrayActivated(QSystemTrayIcon::ActivationReason reason)
