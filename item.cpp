@@ -73,12 +73,14 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     QAction actChangePictureSize(QIcon(":/image/resize.png"), tr("Change Picture Size"), &menu);
     QAction actReloadImage(QIcon(":/image/refresh.png"), tr("Reload Image"), &menu);
     QAction actRemoveImage(QIcon(":/image/delete_img.png"), tr("Remove Image"), &menu);
+    QAction actMarkStar(QIcon(":/image/love.png"), tr("Mark star"), &menu);
     QAction actRemove(QIcon(":/image/delete.png"), tr("Remove Item"), &menu);
     connect(&actPlayVideo, SIGNAL(triggered()), this, SLOT(onPlayVideo()));
     connect(&actOpenDir, SIGNAL(triggered()), this, SLOT(onOpenDir()));
     connect(&actChangePictureSize, SIGNAL(triggered()), this, SLOT(onChangePictureSize()));
     connect(&actReloadImage, SIGNAL(triggered()), this, SLOT(onReloadImage()));
     connect(&actRemoveImage, SIGNAL(triggered()), this, SLOT(onRemoveImage()));
+    connect(&actMarkStar, SIGNAL(triggered()), this, SLOT(onMarkStar()));
     connect(&actRemove, SIGNAL(triggered()), this, SLOT(onRemoveItem()));
 
     menu.addAction(&actPlayVideo);
@@ -86,6 +88,7 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     menu.addAction(&actChangePictureSize);
     menu.addAction(&actReloadImage);
     menu.addAction(&actRemoveImage);
+    menu.addAction(&actMarkStar);
     menu.addAction(&actRemove);
     menu.move(cursor().pos());
     menu.exec();
@@ -190,6 +193,23 @@ void Item::onRemoveImage()
             //qDebug() << "remove file" << filePath << " faild!";
             onReloadImage();
         }
+    }
+}
+
+void Item::onMarkStar()
+{
+    QString dir = QFileInfo(m_strVideoPath).absoluteDir().absolutePath();
+    QString name = QFileInfo(m_strVideoPath).fileName();
+    qDebug() << m_strVideoPath;
+    qDebug() << name;
+    qDebug() << dir;
+    QString strNewName = dir + "/" + "(精)" + name;
+    bool b = QFile::rename(m_strVideoPath, strNewName);
+    QMessageBox::information(NULL, tr("rename"), b ? tr("rename success") : tr("rename failure"));
+    if(b)
+    {
+        m_strVideoPath = strNewName;
+        showImage();
     }
 }
 

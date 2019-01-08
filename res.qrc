@@ -12,5 +12,6 @@
         <file>image/show.png</file>
         <file>image/resize.png</file>
         <file>image/delete_img.png</file>
+        <file>image/love.png</file>
     </qresource>
 </RCC>

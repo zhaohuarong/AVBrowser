@@ -37,6 +37,7 @@ private slots:
     void onRemoveItem();
     void onChangePictureSize();
     void onRemoveImage();
+    void onMarkStar();
 
 private:
     void cleanImage();

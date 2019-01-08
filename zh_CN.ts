@@ -78,18 +78,38 @@
     </message>
     <message>
         <location filename="item.cpp" line="76"/>
+        <source>Mark star</source>
+        <translation>标记精</translation>
+    </message>
+    <message>
+        <location filename="item.cpp" line="77"/>
         <source>Remove Item</source>
         <translation>移除该项</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="161"/>
+        <location filename="item.cpp" line="164"/>
         <source>warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="161"/>
+        <location filename="item.cpp" line="164"/>
         <source>No Images</source>
         <translation>没有图片</translation>
+    </message>
+    <message>
+        <location filename="item.cpp" line="208"/>
+        <source>rename</source>
+        <translation>重命名</translation>
+    </message>
+    <message>
+        <location filename="item.cpp" line="208"/>
+        <source>rename success</source>
+        <translation>重命名成功</translation>
+    </message>
+    <message>
+        <location filename="item.cpp" line="208"/>
+        <source>rename failure</source>
+        <translation>重命名失败</translation>
     </message>
 </context>
 <context>
