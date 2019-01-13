@@ -127,7 +127,8 @@ void Item::showImage()
 //        setFixedHeight(ui->pushButton->height());
 //    else
 //        setFixedHeight(245);
-    ui->pushButton->setStyleSheet(QString("text-align: left; background-color: %1;").arg(bHaveImage ? "rgb(0, 255, 0)" : "rgb(255, 0, 0)"));
+    bool bShow = (QFileInfo(m_strVideoPath).fileName().contains("(精)"));
+    ui->pushButton->setStyleSheet(QString("text-align: left; background-color: %1; color: %2").arg(bHaveImage ? "rgb(0, 255, 0)" : "rgb(255, 0, 0)").arg(bShow ? "rgb(255, 255, 0)" : "rgb(0, 0, 0)"));
 }
 
 void Item::onPlayVideo()
