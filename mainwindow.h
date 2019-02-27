@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
+class QLabel;
 class QListWidgetItem;
 
 namespace Ui {
@@ -55,6 +56,7 @@ private:
     QMenu *m_pTrayMenu;
     QAction *m_pActionShow;
     QAction *m_pActionQuit;
+    QLabel *m_pStatusLabel;
 };
 
 #endif // MAINWINDOW_H

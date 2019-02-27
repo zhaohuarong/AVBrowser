@@ -27,11 +27,16 @@ MainWindow::MainWindow(QWidget *parent) :
     m_pSysTrayIcon(nullptr),
     m_pTrayMenu(nullptr),
     m_pActionShow(nullptr),
-    m_pActionQuit(nullptr)
+    m_pActionQuit(nullptr),
+    m_pStatusLabel(nullptr)
 {
     ui->setupUi(this);
 
     setWindowTitle("AVBrowser");
+
+    m_pStatusLabel = new QLabel(this);
+    m_pStatusLabel->setAlignment(Qt::AlignRight);
+    statusBar()->addPermanentWidget(m_pStatusLabel);
 
     setWindowFlags(windowFlags() & ~Qt::WindowMinimizeButtonHint);
 
@@ -187,7 +192,8 @@ void MainWindow::updateData()
         ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
         m_lstCurrentItems << pItem;
 
-        statusBar()->showMessage(getTypeNumber() + tr(" | Total : %1/%2(%3)").arg(index).arg(m_mapAllVideoPath.count()).arg(m_lstAllSuffix.join(",")));
+        m_pStatusLabel->setText(getTypeNumber());
+        statusBar()->showMessage(tr("Total : %1/%2(%3)").arg(index).arg(m_mapAllVideoPath.count()).arg(m_lstAllSuffix.join(",")));
         dlg.setLabelText(QString("%1/%2").arg(index).arg(m_mapAllVideoPath.count()));
         qApp->processEvents();
 
@@ -216,7 +222,7 @@ QString MainWindow::getTypeNumber()
             break;
         }
     }
-    return tr("[Best:%1, Have Image:%2, No Image:%3]").arg(a1).arg(a2).arg(a3);
+    return tr("Best:%1, Have Image:%2, No Image:%3").arg(a1).arg(a2).arg(a3);
 }
 
 void MainWindow::on_btnOpen_clicked()
@@ -232,12 +238,13 @@ void MainWindow::on_btnOpen_clicked()
 void MainWindow::onCurrentPlayVideoChanged(Item *item)
 {
     m_pCurrentItem = item;
-    statusBar()->showMessage(getTypeNumber() + " | " + m_pCurrentItem->getVideoPath());
+    statusBar()->showMessage(m_pCurrentItem->getVideoPath());
+    m_pStatusLabel->setText(getTypeNumber());
 }
 
 void MainWindow::onRemoveItem(Item *item)
 {
-    if(item == NULL)
+    if(item == nullptr)
         return;
 #if 0
     QFileInfo info(item->getVideoPath());
