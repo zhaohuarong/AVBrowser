@@ -52,62 +52,62 @@
         <translation>按钮</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="71"/>
+        <location filename="item.cpp" line="72"/>
         <source>Play Video</source>
         <translation>播放视频</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="72"/>
+        <location filename="item.cpp" line="73"/>
         <source>Open Dir</source>
         <translation>打开文件夹</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="73"/>
+        <location filename="item.cpp" line="74"/>
         <source>Change Picture Size</source>
         <translation>调整图片尺寸</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="74"/>
+        <location filename="item.cpp" line="75"/>
         <source>Reload Image</source>
         <translation>重新加载图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="75"/>
+        <location filename="item.cpp" line="76"/>
         <source>Remove Image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="76"/>
+        <location filename="item.cpp" line="77"/>
         <source>Mark star</source>
         <translation>标记精</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="77"/>
+        <location filename="item.cpp" line="78"/>
         <source>Remove Item</source>
         <translation>移除该项</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="164"/>
+        <location filename="item.cpp" line="183"/>
         <source>warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="164"/>
+        <location filename="item.cpp" line="183"/>
         <source>No Images</source>
         <translation>没有图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="208"/>
+        <location filename="item.cpp" line="227"/>
         <source>rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="208"/>
+        <location filename="item.cpp" line="227"/>
         <source>rename success</source>
         <translation>重命名成功</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="208"/>
+        <location filename="item.cpp" line="227"/>
         <source>rename failure</source>
         <translation>重命名失败</translation>
     </message>
@@ -190,9 +190,18 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="189"/>
+        <location filename="mainwindow.cpp" line="190"/>
+        <source> | Total : %1/%2(%3)</source>
+        <translation> | 总计 : %1/%2(%3)</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="219"/>
+        <source>[Best:%1, Have Image:%2, No Image:%3]</source>
+        <translation>[精:%1, 有图:%2, 无图:%3]</translation>
+    </message>
+    <message>
         <source>Total : %1/%2(%3)</source>
-        <translation>总计 : %1/%2(%3)</translation>
+        <translation type="vanished">总计 : %1/%2(%3)</translation>
     </message>
     <message>
         <source>Total : %1(%2)</source>
@@ -221,27 +230,48 @@ contains multiple files.</source>
         <translation type="vanished">总计 : %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="202"/>
+        <location filename="mainwindow.cpp" line="224"/>
         <source>Select Video Folder</source>
         <translation>选择视频文件夹</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="236"/>
+        <location filename="mainwindow.cpp" line="245"/>
+        <source>question</source>
+        <translation>问题</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="245"/>
+        <source>Are you sure delete:
+%1</source>
+        <translation>确定删除：%1</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="252"/>
+        <source>&lt;font color=green&gt;Delete Success&lt;/font&gt;</source>
+        <translation>&lt;font color=green&gt;删除成功&lt;/font&gt;</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="252"/>
+        <source>&lt;font color=red&gt;Delete Failure&lt;/font&gt;</source>
+        <translation>&lt;font color=red&gt;删除失败&lt;/font&gt;</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="263"/>
         <source>Select Snapshot Folder</source>
         <translation>选择截图文件夹</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="250"/>
+        <location filename="mainwindow.cpp" line="277"/>
         <source>src or dst is no exists</source>
         <translation>源或目标不存在</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="272"/>
+        <location filename="mainwindow.cpp" line="299"/>
         <source>Move %1 Images</source>
         <translation>移动%1张图片</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="274"/>
+        <location filename="mainwindow.cpp" line="301"/>
         <source>Total: %1
 Copy: %2
 Delete: %3</source>
@@ -250,7 +280,7 @@ Delete: %3</source>
 删除: %3</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="282"/>
+        <location filename="mainwindow.cpp" line="309"/>
         <source>No select dir</source>
         <translation>没有选择文件夹</translation>
     </message>

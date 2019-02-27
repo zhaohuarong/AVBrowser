@@ -30,6 +30,7 @@ protected:
 private:
     void chakan(const QString &path);
     void updateData();
+    QString getTypeNumber();
 
 private slots:
     void on_btnOpen_clicked();

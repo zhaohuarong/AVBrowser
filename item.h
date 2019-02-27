@@ -6,6 +6,12 @@
 namespace Ui {
 class Item;
 }
+enum ItemStatus
+{
+    Item_No_Image = 0,
+    Item_Have_Image,
+    Item_Show
+};
 
 class Item : public QFrame
 {
@@ -20,6 +26,7 @@ public:
     QString getVideoPath() {return m_strVideoPath;}
     void setSize(long long nSize){m_nSize = nSize;}
     void showImage();
+    ItemStatus status() {return m_eStatus;}
 
 public slots:
     void onReloadImage();
@@ -49,6 +56,7 @@ private:
     int m_nIndex;
     long long m_nSize;
     QString m_strCurrentImageLabel;
+    ItemStatus m_eStatus;
 };
 
 #endif // ITEM_H

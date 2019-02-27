@@ -186,7 +186,8 @@ void MainWindow::updateData()
         pItem->showImage();
         ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
         m_lstCurrentItems << pItem;
-        statusBar()->showMessage(tr("Total : %1/%2(%3)").arg(index).arg(m_mapAllVideoPath.count()).arg(m_lstAllSuffix.join(",")));
+
+        statusBar()->showMessage(getTypeNumber() + tr(" | Total : %1/%2(%3)").arg(index).arg(m_mapAllVideoPath.count()).arg(m_lstAllSuffix.join(",")));
         dlg.setLabelText(QString("%1/%2").arg(index).arg(m_mapAllVideoPath.count()));
         qApp->processEvents();
 
@@ -195,6 +196,27 @@ void MainWindow::updateData()
     }
     dlg.setValue(m_mapAllVideoPath.count());
     //ui->scrollArea->verticalScrollBar()->setValue(0);
+}
+
+QString MainWindow::getTypeNumber()
+{
+    int a1 = 0, a2 = 0, a3 = 0;
+    foreach(Item *pItem, m_lstCurrentItems)
+    {
+        switch(pItem->status())
+        {
+        case Item_Show:
+            a1 ++;
+            break;
+        case Item_Have_Image:
+            a2 ++;
+            break;
+        case Item_No_Image:
+            a3 ++;
+            break;
+        }
+    }
+    return tr("[Best:%1, Have Image:%2, No Image:%3]").arg(a1).arg(a2).arg(a3);
 }
 
 void MainWindow::on_btnOpen_clicked()
@@ -210,22 +232,27 @@ void MainWindow::on_btnOpen_clicked()
 void MainWindow::onCurrentPlayVideoChanged(Item *item)
 {
     m_pCurrentItem = item;
-    statusBar()->showMessage(m_pCurrentItem->getVideoPath());
+    statusBar()->showMessage(getTypeNumber() + " | " + m_pCurrentItem->getVideoPath());
 }
 
 void MainWindow::onRemoveItem(Item *item)
 {
     if(item == NULL)
         return;
+#if 0
+    QFileInfo info(item->getVideoPath());
 
-//    QMessageBox::StandardButton btn = QMessageBox::question(this, tr("question"), tr("Are you sure delete this folder?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-//    if(btn == QMessageBox::No)
-//        return;
+    QMessageBox::StandardButton btn = QMessageBox::question(this, tr("question"), tr("Are you sure delete:\n%1").arg(info.baseName()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if(btn == QMessageBox::No)
+        return;
 
-//    QFileInfo info(item->getVideoPath());
+    bool b = deleteDir(info.absolutePath());
+    QMessageBox box(this);
+    box.setIcon(b ? QMessageBox::Information : QMessageBox::Critical);
+    box.setText(b ? tr("<font color=green>Delete Success</font>") : tr("<font color=red>Delete Failure</font>"));
+    box.exec();
 
-//    bool b = deleteDir(info.absolutePath());
-//    m_pSysTrayIcon->showMessage(tr("tip"), b ? tr("Success") : tr("Failure"));
+#endif
     item->hide();
     ui->scrollAreaWidgetContents->layout()->removeWidget(item);
     ui->scrollArea->horizontalScrollBar()->setValue(0);

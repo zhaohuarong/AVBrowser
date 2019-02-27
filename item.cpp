@@ -20,7 +20,8 @@
 Item::Item(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::Item),
-    m_nIndex(0)
+    m_nIndex(0),
+    m_eStatus(Item_No_Image)
 {
     ui->setupUi(this);
 
@@ -128,7 +129,24 @@ void Item::showImage()
 //    else
 //        setFixedHeight(245);
     bool bShow = (QFileInfo(m_strVideoPath).fileName().contains("(精)"));
-    ui->pushButton->setStyleSheet(QString("text-align: left; background-color: %1; color: %2").arg(bHaveImage ? "rgb(0, 255, 0)" : "rgb(255, 0, 0)").arg(bShow ? "rgb(255, 255, 0)" : "rgb(0, 0, 0)"));
+    QString sheet;
+    //ui->pushButton->setStyleSheet(QString("text-align: left; background-color: %1; color: %2").arg(bHaveImage ? "rgb(0, 255, 0)" : "rgb(255, 0, 0)").arg(bShow ? "rgb(255, 215, 0)" : "rgb(0, 0, 0)"));
+    if(bHaveImage && bShow)
+    {
+        m_eStatus = Item_Show;
+        sheet = "text-align: left; background-color: rgb(255, 77, 166)";
+    }
+    else if(bHaveImage && !bShow)
+    {
+        m_eStatus = Item_Have_Image;
+        sheet = "text-align: left; background-color: rgb(0, 255, 0)";
+    }
+    else
+    {
+        m_eStatus = Item_No_Image;
+        sheet = "text-align: left; background-color: rgb(255, 0, 0)";
+    }
+    ui->pushButton->setStyleSheet(sheet);
 }
 
 void Item::onPlayVideo()
