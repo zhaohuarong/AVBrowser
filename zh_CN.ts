@@ -52,62 +52,76 @@
         <translation>按钮</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="72"/>
+        <location filename="item.cpp" line="74"/>
         <source>Play Video</source>
         <translation>播放视频</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="73"/>
+        <location filename="item.cpp" line="75"/>
         <source>Open Dir</source>
         <translation>打开文件夹</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="74"/>
+        <location filename="item.cpp" line="76"/>
+        <location filename="item.cpp" line="172"/>
+        <source>Rename</source>
+        <translation>重命名</translation>
+    </message>
+    <message>
+        <location filename="item.cpp" line="77"/>
         <source>Change Picture Size</source>
         <translation>调整图片尺寸</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="75"/>
+        <location filename="item.cpp" line="78"/>
         <source>Reload Image</source>
         <translation>重新加载图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="76"/>
+        <location filename="item.cpp" line="79"/>
         <source>Remove Image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="77"/>
+        <location filename="item.cpp" line="80"/>
         <source>Mark star</source>
         <translation>标记精</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="78"/>
+        <location filename="item.cpp" line="81"/>
         <source>Remove Item</source>
         <translation>移除该项</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="183"/>
+        <location filename="item.cpp" line="172"/>
+        <source>Input new name</source>
+        <translation>输入新名字</translation>
+    </message>
+    <message>
+        <location filename="item.cpp" line="208"/>
         <source>warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="183"/>
+        <location filename="item.cpp" line="208"/>
         <source>No Images</source>
         <translation>没有图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="227"/>
+        <location filename="item.cpp" line="179"/>
+        <location filename="item.cpp" line="252"/>
         <source>rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="227"/>
+        <location filename="item.cpp" line="179"/>
+        <location filename="item.cpp" line="252"/>
         <source>rename success</source>
         <translation>重命名成功</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="227"/>
+        <location filename="item.cpp" line="179"/>
+        <location filename="item.cpp" line="252"/>
         <source>rename failure</source>
         <translation>重命名失败</translation>
     </message>

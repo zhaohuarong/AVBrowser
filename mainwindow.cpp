@@ -23,11 +23,11 @@ QStringList m_lstImageFormat;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_pCurrentItem(NULL),
-    m_pSysTrayIcon(NULL),
-    m_pTrayMenu(NULL),
-    m_pActionShow(NULL),
-    m_pActionQuit(NULL)
+    m_pCurrentItem(nullptr),
+    m_pSysTrayIcon(nullptr),
+    m_pTrayMenu(nullptr),
+    m_pActionShow(nullptr),
+    m_pActionQuit(nullptr)
 {
     ui->setupUi(this);
 

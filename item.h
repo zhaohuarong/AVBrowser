@@ -41,6 +41,7 @@ signals:
 private slots:
     void onPlayVideo();
     void onOpenDir();
+    void onRename();
     void onRemoveItem();
     void onChangePictureSize();
     void onRemoveImage();

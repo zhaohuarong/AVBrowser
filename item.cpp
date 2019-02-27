@@ -1,3 +1,5 @@
+#include <QLineEdit>
+#include <QInputDialog>
 #include <QRect>
 #include <QMessageBox>
 #include <QContextMenuEvent>
@@ -52,7 +54,7 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     foreach(QObject *pObj, this->children())
     {
         ItemImageLabel *pLbl = qobject_cast<ItemImageLabel *>(pObj);
-        if(pLbl != NULL)
+        if(pLbl != nullptr)
         {
             mapAllImageRect.insert(pLbl, QRect(pLbl->pos(), pLbl->size()));
         }
@@ -71,6 +73,7 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     QMenu menu(this);
     QAction actPlayVideo(QIcon(":/image/video.png"), tr("Play Video"), &menu);
     QAction actOpenDir(QIcon(":/image/open.png"), tr("Open Dir"), &menu);
+    QAction actRename(QIcon(":/image/rename.png"), tr("Rename"), &menu);
     QAction actChangePictureSize(QIcon(":/image/resize.png"), tr("Change Picture Size"), &menu);
     QAction actReloadImage(QIcon(":/image/refresh.png"), tr("Reload Image"), &menu);
     QAction actRemoveImage(QIcon(":/image/delete_img.png"), tr("Remove Image"), &menu);
@@ -78,6 +81,7 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     QAction actRemove(QIcon(":/image/delete.png"), tr("Remove Item"), &menu);
     connect(&actPlayVideo, SIGNAL(triggered()), this, SLOT(onPlayVideo()));
     connect(&actOpenDir, SIGNAL(triggered()), this, SLOT(onOpenDir()));
+    connect(&actRename, SIGNAL(triggered()), this, SLOT(onRename()));
     connect(&actChangePictureSize, SIGNAL(triggered()), this, SLOT(onChangePictureSize()));
     connect(&actReloadImage, SIGNAL(triggered()), this, SLOT(onReloadImage()));
     connect(&actRemoveImage, SIGNAL(triggered()), this, SLOT(onRemoveImage()));
@@ -86,6 +90,7 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
 
     menu.addAction(&actPlayVideo);
     menu.addAction(&actOpenDir);
+    menu.addAction(&actRename);
     menu.addAction(&actChangePictureSize);
     menu.addAction(&actReloadImage);
     menu.addAction(&actRemoveImage);
@@ -160,6 +165,26 @@ void Item::onOpenDir()
     QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(m_strVideoPath).dir().absolutePath()));
 }
 
+void Item::onRename()
+{
+    bool ok = false;
+    QString name = QFileInfo(m_strVideoPath).fileName();
+    QString strNewName = QInputDialog::getText(nullptr, tr("Rename"), tr("Input new name"), QLineEdit::Normal, name, &ok);
+    if(ok && !strNewName.trimmed().isEmpty())
+    {
+        QString dir = QFileInfo(m_strVideoPath).absoluteDir().absolutePath();
+        QString strNewPath = dir + "/" + strNewName;
+
+        bool b = QFile::rename(m_strVideoPath, strNewPath);
+        QMessageBox::information(nullptr, tr("rename"), b ? tr("rename success") : tr("rename failure"));
+        if(b)
+        {
+            m_strVideoPath = strNewPath;
+            onReloadImage();
+        }
+    }
+}
+
 void Item::onRemoveItem()
 {
     emit sigRemoveItem(this);
@@ -172,7 +197,7 @@ void Item::onChangePictureSize()
     foreach(QObject *obj, lstObject)
     {
         ItemImageLabel *item = qobject_cast<ItemImageLabel *>(obj);
-        if(item != NULL)
+        if(item != nullptr)
         {
             lstImagePath << item->getImagePath();
         }
@@ -180,12 +205,12 @@ void Item::onChangePictureSize()
 
     if(lstImagePath.count() <= 0)
     {
-        QMessageBox::warning(NULL, tr("warning"), tr("No Images"));
+        QMessageBox::warning(nullptr, tr("warning"), tr("No Images"));
         return;
     }
 
     QImage img(lstImagePath.at(0));
-    DialogResizePicture dlg(NULL);
+    DialogResizePicture dlg(nullptr);
     dlg.setImage(img);
     dlg.setWidthAndHeightValue(img.width(), img.height());
     if(dlg.exec() != QDialog::Accepted)
@@ -224,11 +249,11 @@ void Item::onMarkStar()
     qDebug() << dir;
     QString strNewName = dir + "/" + "(精)" + name;
     bool b = QFile::rename(m_strVideoPath, strNewName);
-    QMessageBox::information(NULL, tr("rename"), b ? tr("rename success") : tr("rename failure"));
+    QMessageBox::information(nullptr, tr("rename"), b ? tr("rename success") : tr("rename failure"));
     if(b)
     {
         m_strVideoPath = strNewName;
-        showImage();
+        onReloadImage();
     }
 }
 
@@ -238,11 +263,11 @@ void Item::cleanImage()
     foreach(QObject *obj, lstObject)
     {
         ItemImageLabel *item = qobject_cast<ItemImageLabel *>(obj);
-        if(item != NULL)
+        if(item != nullptr)
         {
             ui->imageLayout->removeWidget(item);
             delete item;
-            item = NULL;
+            item = nullptr;
         }
     }
 }
