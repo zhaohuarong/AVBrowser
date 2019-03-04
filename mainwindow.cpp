@@ -85,7 +85,7 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     hide();
-    m_pSysTrayIcon->showMessage(tr("Tips"), tr("Minimized to tray"));
+    //m_pSysTrayIcon->showMessage(tr("Tips"), tr("Minimized to tray"));
     e->ignore();
 }
 
