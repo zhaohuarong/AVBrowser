@@ -10,6 +10,8 @@ DialogResizePicture::DialogResizePicture(QWidget *parent) :
     connect(ui->btnOK, SIGNAL(clicked()), this, SLOT(accept()));
     connect(ui->btnCancel, SIGNAL(clicked()), this, SLOT(reject()));
     connect(ui->btnPriview, SIGNAL(clicked()), this, SLOT(onPriview()));
+    connect(ui->spinW, SIGNAL(valueChanged(int)), this, SLOT(onPriview()));
+    connect(ui->spinH, SIGNAL(valueChanged(int)), this, SLOT(onPriview()));
 }
 
 DialogResizePicture::~DialogResizePicture()

@@ -214,17 +214,35 @@ void Item::onZoomPicture()
 
     QImage img(lstImagePath.at(0));
     bool ok = false;
-    int zoom = QInputDialog::getInt(nullptr, tr("zoom"), tr("%1 * %2\nInput zoom rate").arg(img.width()).arg(img.height()), 100, 10, 100, 1, &ok);
-    if(!ok)
-        return;
-    QSize newSize = (float)zoom / 100 * img.size();
-    foreach(QString strPath, lstImagePath)
+
+    QMap<QString, float> mapZoomRate;
+    float delta = 0.125;
+    for(int i = 7; i > 0; i --)
     {
-        QImage orgImg(strPath);
-        QImage zoomImg = orgImg.scaled(newSize);
-        zoomImg.save(strPath);
+        int w = img.width() * delta * i;
+        int h = img.height() * delta * i;
+        mapZoomRate.insert(QString("%1/8 - %2*%3").arg(i).arg(w).arg(h), delta * i);
     }
-    onReloadImage();
+
+    QStringList lstLabel;
+    for(QMap<QString, float>::const_iterator iter = mapZoomRate.constBegin(); iter != mapZoomRate.constEnd(); iter ++)
+    {
+        lstLabel << iter.key();
+    }
+
+    QString ss = QInputDialog::getItem(nullptr, tr("zoom"), tr("original size: %1 * %2").arg(img.width()).arg(img.height()), lstLabel, 0, false, &ok);
+    if(ok && !ss.isEmpty())
+    {
+        float zoom = mapZoomRate.value(ss);
+        QSize newSize = zoom * img.size();
+        foreach(QString strPath, lstImagePath)
+        {
+            QImage orgImg(strPath);
+            QImage zoomImg = orgImg.scaled(newSize);
+            zoomImg.save(strPath);
+        }
+        onReloadImage();
+    }
 }
 
 void Item::onChangePictureSize()

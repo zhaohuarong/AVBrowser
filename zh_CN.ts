@@ -105,26 +105,30 @@
     </message>
     <message>
         <location filename="item.cpp" line="211"/>
-        <location filename="item.cpp" line="245"/>
+        <location filename="item.cpp" line="263"/>
         <source>warning</source>
         <translation>警告</translation>
     </message>
     <message>
         <location filename="item.cpp" line="211"/>
-        <location filename="item.cpp" line="245"/>
+        <location filename="item.cpp" line="263"/>
         <source>No Images</source>
         <translation>没有图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="217"/>
+        <location filename="item.cpp" line="233"/>
         <source>zoom</source>
         <translation>缩放</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="217"/>
+        <location filename="item.cpp" line="233"/>
+        <source>original size: %1 * %2</source>
+        <translation>原始尺寸: %1 * %2</translation>
+    </message>
+    <message>
         <source>%1 * %2
 Input zoom rate</source>
-        <translation>%1 * %2
+        <translation type="vanished">%1 * %2
 输入缩放比</translation>
     </message>
     <message>
@@ -133,19 +137,19 @@ Input zoom rate</source>
     </message>
     <message>
         <location filename="item.cpp" line="182"/>
-        <location filename="item.cpp" line="289"/>
+        <location filename="item.cpp" line="307"/>
         <source>rename</source>
         <translation>重命名</translation>
     </message>
     <message>
         <location filename="item.cpp" line="182"/>
-        <location filename="item.cpp" line="289"/>
+        <location filename="item.cpp" line="307"/>
         <source>rename success</source>
         <translation>重命名成功</translation>
     </message>
     <message>
         <location filename="item.cpp" line="182"/>
-        <location filename="item.cpp" line="289"/>
+        <location filename="item.cpp" line="307"/>
         <source>rename failure</source>
         <translation>重命名失败</translation>
     </message>
