@@ -14,5 +14,6 @@
         <file>image/delete_img.png</file>
         <file>image/love.png</file>
         <file>image/rename.png</file>
+        <file>image/scale.png</file>
     </qresource>
 </RCC>

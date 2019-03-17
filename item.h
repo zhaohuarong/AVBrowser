@@ -44,6 +44,7 @@ private slots:
     void onRename();
     void onRemoveItem();
     void onChangePictureSize();
+    void onZoomPicture();
     void onRemoveImage();
     void onMarkStar();
 

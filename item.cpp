@@ -74,7 +74,8 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     QAction actPlayVideo(QIcon(":/image/video.png"), tr("Play Video"), &menu);
     QAction actOpenDir(QIcon(":/image/open.png"), tr("Open Dir"), &menu);
     QAction actRename(QIcon(":/image/rename.png"), tr("Rename"), &menu);
-    QAction actChangePictureSize(QIcon(":/image/resize.png"), tr("Change Picture Size"), &menu);
+    QAction actCutPicture(QIcon(":/image/resize.png"), tr("Cut Picture"), &menu);
+    QAction actZoomPicture(QIcon(":/image/scale.png"), tr("Zoom Picture"), &menu);
     QAction actReloadImage(QIcon(":/image/refresh.png"), tr("Reload Image"), &menu);
     QAction actRemoveImage(QIcon(":/image/delete_img.png"), tr("Remove Image"), &menu);
     QAction actMarkStar(QIcon(":/image/love.png"), tr("Mark star"), &menu);
@@ -82,7 +83,8 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     connect(&actPlayVideo, SIGNAL(triggered()), this, SLOT(onPlayVideo()));
     connect(&actOpenDir, SIGNAL(triggered()), this, SLOT(onOpenDir()));
     connect(&actRename, SIGNAL(triggered()), this, SLOT(onRename()));
-    connect(&actChangePictureSize, SIGNAL(triggered()), this, SLOT(onChangePictureSize()));
+    connect(&actCutPicture, SIGNAL(triggered()), this, SLOT(onChangePictureSize()));
+    connect(&actZoomPicture, SIGNAL(triggered()), this, SLOT(onZoomPicture()));
     connect(&actReloadImage, SIGNAL(triggered()), this, SLOT(onReloadImage()));
     connect(&actRemoveImage, SIGNAL(triggered()), this, SLOT(onRemoveImage()));
     connect(&actMarkStar, SIGNAL(triggered()), this, SLOT(onMarkStar()));
@@ -91,7 +93,8 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     menu.addAction(&actPlayVideo);
     menu.addAction(&actOpenDir);
     menu.addAction(&actRename);
-    menu.addAction(&actChangePictureSize);
+    menu.addAction(&actCutPicture);
+    menu.addAction(&actZoomPicture);
     menu.addAction(&actReloadImage);
     menu.addAction(&actRemoveImage);
     menu.addAction(&actMarkStar);
@@ -188,6 +191,40 @@ void Item::onRename()
 void Item::onRemoveItem()
 {
     emit sigRemoveItem(this);
+}
+
+void Item::onZoomPicture()
+{
+    QStringList lstImagePath;
+    QObjectList lstObject = children();
+    foreach(QObject *obj, lstObject)
+    {
+        ItemImageLabel *item = qobject_cast<ItemImageLabel *>(obj);
+        if(item != nullptr)
+        {
+            lstImagePath << item->getImagePath();
+        }
+    }
+
+    if(lstImagePath.count() <= 0)
+    {
+        QMessageBox::warning(nullptr, tr("warning"), tr("No Images"));
+        return;
+    }
+
+    QImage img(lstImagePath.at(0));
+    bool ok = false;
+    int zoom = QInputDialog::getInt(nullptr, tr("zoom"), tr("%1 * %2\nInput zoom rate").arg(img.width()).arg(img.height()), 100, 10, 100, 1, &ok);
+    if(!ok)
+        return;
+    QSize newSize = (float)zoom / 100 * img.size();
+    foreach(QString strPath, lstImagePath)
+    {
+        QImage orgImg(strPath);
+        QImage zoomImg = orgImg.scaled(newSize);
+        zoomImg.save(strPath);
+    }
+    onReloadImage();
 }
 
 void Item::onChangePictureSize()
