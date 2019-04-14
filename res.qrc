@@ -15,5 +15,6 @@
         <file>image/love.png</file>
         <file>image/rename.png</file>
         <file>image/scale.png</file>
+        <file>image/cut.png</file>
     </qresource>
 </RCC>

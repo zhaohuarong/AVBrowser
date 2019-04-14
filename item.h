@@ -42,6 +42,7 @@ private slots:
     void onPlayVideo();
     void onOpenDir();
     void onRename();
+    void onCutVideo();
     void onRemoveItem();
     void onChangePictureSize();
     void onZoomPicture();

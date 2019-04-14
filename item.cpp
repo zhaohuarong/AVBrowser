@@ -10,8 +10,10 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileInfo>
+#include <QProcess>
 #include <QDebug>
 
+#include "dialogcroptime.h"
 #include "dialogresizepicture.h"
 #include "setting.h"
 #include "itemimagelabel.h"
@@ -69,20 +71,22 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
         }
     }
 
-    e->accept();
     QMenu menu(this);
     QAction actPlayVideo(QIcon(":/image/video.png"), tr("Play Video"), &menu);
     QAction actOpenDir(QIcon(":/image/open.png"), tr("Open Dir"), &menu);
     QAction actRename(QIcon(":/image/rename.png"), tr("Rename"), &menu);
+    QAction actCutVideo(QIcon(":/image/cut.png"), tr("Cut Video"), &menu);
     QAction actCutPicture(QIcon(":/image/resize.png"), tr("Cut Picture"), &menu);
     QAction actZoomPicture(QIcon(":/image/scale.png"), tr("Zoom Picture"), &menu);
     QAction actReloadImage(QIcon(":/image/refresh.png"), tr("Reload Image"), &menu);
     QAction actRemoveImage(QIcon(":/image/delete_img.png"), tr("Remove Image"), &menu);
     QAction actMarkStar(QIcon(":/image/love.png"), tr("Mark star"), &menu);
     QAction actRemove(QIcon(":/image/delete.png"), tr("Remove Item"), &menu);
+
     connect(&actPlayVideo, SIGNAL(triggered()), this, SLOT(onPlayVideo()));
     connect(&actOpenDir, SIGNAL(triggered()), this, SLOT(onOpenDir()));
     connect(&actRename, SIGNAL(triggered()), this, SLOT(onRename()));
+    connect(&actCutVideo, SIGNAL(triggered()), this, SLOT(onCutVideo()));
     connect(&actCutPicture, SIGNAL(triggered()), this, SLOT(onChangePictureSize()));
     connect(&actZoomPicture, SIGNAL(triggered()), this, SLOT(onZoomPicture()));
     connect(&actReloadImage, SIGNAL(triggered()), this, SLOT(onReloadImage()));
@@ -93,6 +97,7 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     menu.addAction(&actPlayVideo);
     menu.addAction(&actOpenDir);
     menu.addAction(&actRename);
+    menu.addAction(&actCutVideo);
     menu.addAction(&actCutPicture);
     menu.addAction(&actZoomPicture);
     menu.addAction(&actReloadImage);
@@ -101,6 +106,8 @@ void Item::contextMenuEvent(QContextMenuEvent *e)
     menu.addAction(&actRemove);
     menu.move(cursor().pos());
     menu.exec();
+
+    e->accept();
 }
 
 void Item::showImage()
@@ -185,6 +192,30 @@ void Item::onRename()
             m_strVideoPath = strNewPath;
             onReloadImage();
         }
+    }
+}
+
+void Item::onCutVideo()
+{
+    QString name = QFileInfo(m_strVideoPath).fileName();
+    QString strOutName = QFileInfo(m_strVideoPath).absoluteDir().absolutePath() + "/out." + QFileInfo(m_strVideoPath).suffix();
+
+    DialogCropTime dialog;
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        QString cmd = QString("ffmpeg -i %1 -vcodec copy -acodec copy -ss %2 -to %3 %4 -y").arg(m_strVideoPath).arg(dialog.getStartTime()).arg(dialog.getEndTime()).arg(strOutName);
+        qDebug() << cmd;
+
+        QMessageBox testMassage;
+        testMassage.setText(cmd);
+        testMassage.show();
+        qApp->processEvents();
+
+        QProcess p;
+        p.start("cmd", QStringList() << "/c" << cmd);
+        p.waitForStarted();
+        p.waitForFinished();
+        QString strTemp=QString::fromLocal8Bit(p.readAllStandardOutput());
     }
 }
 

@@ -14,18 +14,21 @@ SOURCES += main.cpp\
     setting.cpp \
     item.cpp \
     itemimagelabel.cpp \
-    dialogresizepicture.cpp
+    dialogresizepicture.cpp \
+    dialogcroptime.cpp
 
 HEADERS  += mainwindow.h \
     setting.h \
     item.h \
     define.h \
     itemimagelabel.h \
-    dialogresizepicture.h
+    dialogresizepicture.h \
+    dialogcroptime.h
 
 FORMS    += mainwindow.ui \
     item.ui \
-    dialogresizepicture.ui
+    dialogresizepicture.ui \
+    dialogcroptime.ui
 
 RESOURCES += \
     res.qrc

@@ -2,6 +2,34 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN" sourcelanguage="en_US">
 <context>
+    <name>DialogCropTime</name>
+    <message>
+        <location filename="dialogcroptime.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>对话框</translation>
+    </message>
+    <message>
+        <location filename="dialogcroptime.ui" line="22"/>
+        <source>Start Time</source>
+        <translation>开始时间</translation>
+    </message>
+    <message>
+        <location filename="dialogcroptime.ui" line="50"/>
+        <source>End Time</source>
+        <translation>结束时间</translation>
+    </message>
+    <message>
+        <location filename="dialogcroptime.ui" line="95"/>
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <location filename="dialogcroptime.ui" line="102"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+</context>
+<context>
     <name>DialogResizePicture</name>
     <message>
         <location filename="dialogresizepicture.ui" line="14"/>
@@ -9,32 +37,32 @@
         <translation>对话框</translation>
     </message>
     <message>
-        <location filename="dialogresizepicture.ui" line="26"/>
+        <location filename="dialogresizepicture.ui" line="41"/>
         <source>img</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="dialogresizepicture.ui" line="36"/>
+        <location filename="dialogresizepicture.ui" line="66"/>
         <source>W:</source>
         <translation>宽：</translation>
     </message>
     <message>
-        <location filename="dialogresizepicture.ui" line="50"/>
+        <location filename="dialogresizepicture.ui" line="80"/>
         <source>H:</source>
         <translation>高：</translation>
     </message>
     <message>
-        <location filename="dialogresizepicture.ui" line="77"/>
+        <location filename="dialogresizepicture.ui" line="107"/>
         <source>priview</source>
         <translation>预览</translation>
     </message>
     <message>
-        <location filename="dialogresizepicture.ui" line="102"/>
+        <location filename="dialogresizepicture.ui" line="132"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="dialogresizepicture.ui" line="109"/>
+        <location filename="dialogresizepicture.ui" line="139"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -52,76 +80,81 @@
         <translation>按钮</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="74"/>
+        <location filename="item.cpp" line="75"/>
         <source>Play Video</source>
         <translation>播放视频</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="75"/>
+        <location filename="item.cpp" line="76"/>
         <source>Open Dir</source>
         <translation>打开文件夹</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="76"/>
-        <location filename="item.cpp" line="175"/>
+        <location filename="item.cpp" line="77"/>
+        <location filename="item.cpp" line="182"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="77"/>
+        <location filename="item.cpp" line="78"/>
+        <source>Cut Video</source>
+        <translation>剪辑视频</translation>
+    </message>
+    <message>
+        <location filename="item.cpp" line="79"/>
         <source>Cut Picture</source>
         <oldsource>Change Picture Size</oldsource>
         <translation>裁剪图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="78"/>
+        <location filename="item.cpp" line="80"/>
         <source>Zoom Picture</source>
         <translation>缩放图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="79"/>
+        <location filename="item.cpp" line="81"/>
         <source>Reload Image</source>
         <translation>重新加载图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="80"/>
+        <location filename="item.cpp" line="82"/>
         <source>Remove Image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="81"/>
+        <location filename="item.cpp" line="83"/>
         <source>Mark star</source>
         <translation>标记精</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="82"/>
+        <location filename="item.cpp" line="84"/>
         <source>Remove Item</source>
         <translation>移除该项</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="175"/>
+        <location filename="item.cpp" line="182"/>
         <source>Input new name</source>
         <translation>输入新名字</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="211"/>
-        <location filename="item.cpp" line="263"/>
+        <location filename="item.cpp" line="242"/>
+        <location filename="item.cpp" line="294"/>
         <source>warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="211"/>
-        <location filename="item.cpp" line="263"/>
+        <location filename="item.cpp" line="242"/>
+        <location filename="item.cpp" line="294"/>
         <source>No Images</source>
         <translation>没有图片</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="233"/>
+        <location filename="item.cpp" line="264"/>
         <source>zoom</source>
         <translation>缩放</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="233"/>
+        <location filename="item.cpp" line="264"/>
         <source>original size: %1 * %2</source>
         <translation>原始尺寸: %1 * %2</translation>
     </message>
@@ -136,20 +169,20 @@ Input zoom rate</source>
         <translation type="vanished">输入缩放比例</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="182"/>
-        <location filename="item.cpp" line="307"/>
+        <location filename="item.cpp" line="189"/>
+        <location filename="item.cpp" line="338"/>
         <source>rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="182"/>
-        <location filename="item.cpp" line="307"/>
+        <location filename="item.cpp" line="189"/>
+        <location filename="item.cpp" line="338"/>
         <source>rename success</source>
         <translation>重命名成功</translation>
     </message>
     <message>
-        <location filename="item.cpp" line="182"/>
-        <location filename="item.cpp" line="307"/>
+        <location filename="item.cpp" line="189"/>
+        <location filename="item.cpp" line="338"/>
         <source>rename failure</source>
         <translation>重命名失败</translation>
     </message>
