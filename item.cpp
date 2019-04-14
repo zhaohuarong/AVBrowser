@@ -328,14 +328,21 @@ void Item::onRemoveImage()
 
 void Item::onMarkStar()
 {
+    QString strStar = "(精)";
     QString dir = QFileInfo(m_strVideoPath).absoluteDir().absolutePath();
     QString name = QFileInfo(m_strVideoPath).fileName();
-    qDebug() << m_strVideoPath;
-    qDebug() << name;
-    qDebug() << dir;
-    QString strNewName = dir + "/" + "(精)" + name;
+    bool bStar = name.contains(strStar);
+    QString strNewName;
+    if(bStar)
+    {
+        strNewName = dir + "/" + name.replace(strStar, "");
+    }
+    else
+    {
+        strNewName = dir + "/" + strStar + name;
+    }
+
     bool b = QFile::rename(m_strVideoPath, strNewName);
-    QMessageBox::information(nullptr, tr("rename"), b ? tr("rename success") : tr("rename failure"));
     if(b)
     {
         m_strVideoPath = strNewName;
