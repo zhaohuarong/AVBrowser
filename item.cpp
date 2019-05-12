@@ -201,6 +201,7 @@ void Item::onCutVideo()
     QString strOutName = QFileInfo(m_strVideoPath).absoluteDir().absolutePath() + "/out." + QFileInfo(m_strVideoPath).suffix();
 
     DialogCropTime dialog;
+    dialog.setStartEndTime(m_startTime, m_endTime);
     if(dialog.exec() == QDialog::Accepted)
     {
         QString cmd = QString("ffmpeg -i %1 -vcodec copy -acodec copy -ss %2 -to %3 %4 -y").arg(m_strVideoPath).arg(dialog.getStartTime()).arg(dialog.getEndTime()).arg(strOutName);
@@ -217,6 +218,8 @@ void Item::onCutVideo()
         p.waitForFinished();
         QString strTemp=QString::fromLocal8Bit(p.readAllStandardOutput());
     }
+    m_startTime = dialog.getStartTime();
+    m_endTime = dialog.getEndTime();
 }
 
 void Item::onRemoveItem()

@@ -27,6 +27,19 @@ DialogCropTime::~DialogCropTime()
     delete ui;
 }
 
+void DialogCropTime::setStartEndTime(const QString &startTime, const QString &endTime)
+{
+    QTime startT = QTime::fromString(startTime, "h:m:s");
+    ui->spStartH->setValue(startT.hour());
+    ui->spStartM->setValue(startT.minute());
+    ui->spStartS->setValue(startT.second());
+
+    QTime endT = QTime::fromString(endTime, "h:m:s");
+    ui->spEndH->setValue(endT.hour());
+    ui->spEndM->setValue(endT.minute());
+    ui->spEndS->setValue(endT.second());
+}
+
 QString DialogCropTime::getStartTime()
 {
     QString h = QString::number(ui->spStartH->value());

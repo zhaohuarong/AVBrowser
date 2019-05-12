@@ -14,6 +14,7 @@ class DialogCropTime : public QDialog
 public:
     explicit DialogCropTime(QWidget *parent = nullptr);
     ~DialogCropTime();
+    void setStartEndTime(const QString &startTime, const QString &endTime);
 
     QString getStartTime();
     QString getEndTime();

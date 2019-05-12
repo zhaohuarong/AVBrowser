@@ -60,6 +60,8 @@ private:
     long long m_nSize;
     QString m_strCurrentImageLabel;
     ItemStatus m_eStatus;
+    QString m_startTime;
+    QString m_endTime;
 };
 
 #endif // ITEM_H
