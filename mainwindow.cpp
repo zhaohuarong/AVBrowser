@@ -190,7 +190,6 @@ void MainWindow::updateData()
         pItem->setSize(iter.key());
         pItem->setVideoPath(iter.value());
         pItem->showImage();
-        //ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
         layout->addWidget(pItem);
         m_lstCurrentItems << pItem;
 
