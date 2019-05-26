@@ -177,6 +177,7 @@ void MainWindow::updateData()
     dlg.show();
 
     int index = 0;
+    QBoxLayout *layout = qobject_cast<QBoxLayout *>(ui->scrollAreaWidgetContents->layout());
     for(QMultiMap<long long, QString>::const_iterator iter = m_mapAllVideoPath.constEnd() - 1; iter != m_mapAllVideoPath.constBegin() - 1; iter --)
     {
         dlg.setValue(index ++);
@@ -189,7 +190,8 @@ void MainWindow::updateData()
         pItem->setSize(iter.key());
         pItem->setVideoPath(iter.value());
         pItem->showImage();
-        ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
+        //ui->scrollAreaWidgetContents->layout()->addWidget(pItem);
+        layout->addWidget(pItem);
         m_lstCurrentItems << pItem;
 
         m_pStatusLabel->setText(getTypeNumber());
@@ -200,6 +202,7 @@ void MainWindow::updateData()
         // scroll to end
         ui->scrollArea->verticalScrollBar()->setValue(ui->scrollArea->verticalScrollBar()->maximum());
     }
+    layout->addStretch();
     dlg.setValue(m_mapAllVideoPath.count());
     //ui->scrollArea->verticalScrollBar()->setValue(0);
 }
