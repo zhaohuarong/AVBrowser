@@ -35,4 +35,6 @@ RESOURCES += \
 
 TRANSLATIONS += $$PWD/zh_CN.ts
 
+QMAKE_CXXFLAGS += /utf-8
+
 RC_FILE = app.rc
