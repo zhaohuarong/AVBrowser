@@ -264,7 +264,7 @@ void Item::onZoomPicture()
         lstLabel << iter.key();
     }
 
-    QString ss = QInputDialog::getItem(nullptr, tr("zoom"), tr("original size: %1 * %2").arg(img.width()).arg(img.height()), lstLabel, 0, false, &ok);
+    QString ss = QInputDialog::getItem(nullptr, tr("zoom"), tr("original size: %1 * %2").arg(img.width()).arg(img.height()), lstLabel, lstLabel.count() / 2, false, &ok);
     if(ok && !ss.isEmpty())
     {
         float zoom = mapZoomRate.value(ss);
