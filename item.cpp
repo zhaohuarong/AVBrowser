@@ -129,7 +129,7 @@ void Item::showImage()
             {
                 bHaveImage = true;
                 // change item height
-                setFixedHeight(245);
+                setFixedHeight(268);
             }
             ItemImageLabel *pLabel = new ItemImageLabel(this);
             ui->imageLayout->insertWidget(0, pLabel);
