@@ -10,6 +10,8 @@
 #include <QDebug>
 #include <QListWidgetItem>
 #include <QProgressDialog>
+#include <QDragEnterEvent>
+#include <QMimeData>
 
 #include <setting.h>
 #include "define.h"
@@ -33,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowTitle("AVBrowser");
+
+    setAcceptDrops(true);
 
     m_pStatusLabel = new QLabel(this);
     m_pStatusLabel->setAlignment(Qt::AlignRight);
@@ -95,6 +99,40 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     {
     case Qt::Key_Escape:
         close();
+        break;
+    }
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *e)
+{
+    if (e->mimeData()->hasUrls())
+        e->acceptProposedAction();
+}
+
+void MainWindow::dropEvent(QDropEvent *e)
+{
+    QList<QUrl> urls = e->mimeData()->urls();
+    if(urls.isEmpty())
+        return;
+    if(urls.count() != 1)
+    {
+        QMessageBox::warning(this, tr("warning"), tr("only one!"));
+        return;
+    }
+    foreach(QUrl url, urls)
+    {
+        QString file_name = url.toLocalFile();
+        QFileInfo info(file_name);
+        if(info.isDir())
+        {
+            m_strCurrentDir = file_name;
+            ui->lblOpenDir->setText(m_strCurrentDir);
+        }
+        else if(info.isFile())
+        {
+            m_strCurrentDir = info.absoluteDir().absolutePath();
+            ui->lblOpenDir->setText(m_strCurrentDir);
+        }
         break;
     }
 }

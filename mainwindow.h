@@ -27,6 +27,8 @@ protected:
     void resizeEvent(QResizeEvent *e);
     void closeEvent(QCloseEvent *e);
     void keyPressEvent(QKeyEvent *e);
+    void dragEnterEvent(QDragEnterEvent *e);
+    void dropEvent(QDropEvent *e);
 
 private:
     void chakan(const QString &path);
