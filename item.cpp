@@ -177,9 +177,36 @@ void Item::onOpenDir()
 
 void Item::onRename()
 {
-    bool ok = false;
-    QString name = QFileInfo(m_strVideoPath).fileName();
+//    QString name = QFileInfo(m_strVideoPath).fileName();
+    QString name = QFileInfo(m_strVideoPath).completeBaseName();
+    QString suffix = QFileInfo(m_strVideoPath).suffix();
+#if 1
+    QInputDialog dlg(nullptr);
+    dlg.setWindowTitle(tr("Rename"));
+    dlg.setLabelText(tr("Input new name"));
+    dlg.resize(640, 200);
+    dlg.setInputMode(QInputDialog::TextInput);
+    dlg.setTextValue(name);
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        QString strNewName = dlg.textValue().trimmed();
+        if(!strNewName.isEmpty())
+        {
+            QString dir = QFileInfo(m_strVideoPath).absoluteDir().absolutePath();
+            QString strNewPath = dir + "/" + strNewName + "." + suffix;
+
+            bool b = QFile::rename(m_strVideoPath, strNewPath);
+            QMessageBox::information(nullptr, tr("rename"), b ? tr("rename success") : tr("rename failure"));
+            if(b)
+            {
+                m_strVideoPath = strNewPath;
+                onReloadImage();
+            }
+        }
+    }
+#else
     QString strNewName = QInputDialog::getText(nullptr, tr("Rename"), tr("Input new name"), QLineEdit::Normal, name, &ok);
+
     if(ok && !strNewName.trimmed().isEmpty())
     {
         QString dir = QFileInfo(m_strVideoPath).absoluteDir().absolutePath();
@@ -193,6 +220,7 @@ void Item::onRename()
             onReloadImage();
         }
     }
+#endif
 }
 
 void Item::onCutVideo()

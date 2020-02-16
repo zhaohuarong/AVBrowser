@@ -21,10 +21,7 @@ public:
 
 private:
     inline QString transfer(int n) const;
-
-private slots:
-    void onStartTimeChanged(int value);
-    void onEndTimeChanged(int value);
+    void initComboBox();
 
 private:
     Ui::DialogCropTime *ui;

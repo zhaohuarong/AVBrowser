@@ -13,13 +13,7 @@ DialogCropTime::DialogCropTime(QWidget *parent) :
     connect(ui->btnOK, SIGNAL(clicked()), this, SLOT(accept()));
     connect(ui->btnCancel, SIGNAL(clicked()), this, SLOT(reject()));
 
-    connect(ui->spStartH, SIGNAL(valueChanged(int)), this, SLOT(onStartTimeChanged(int)));
-    connect(ui->spStartM, SIGNAL(valueChanged(int)), this, SLOT(onStartTimeChanged(int)));
-    connect(ui->spStartS, SIGNAL(valueChanged(int)), this, SLOT(onStartTimeChanged(int)));
-
-    connect(ui->spEndH, SIGNAL(valueChanged(int)), this, SLOT(onEndTimeChanged(int)));
-    connect(ui->spEndM, SIGNAL(valueChanged(int)), this, SLOT(onEndTimeChanged(int)));
-    connect(ui->spEndS, SIGNAL(valueChanged(int)), this, SLOT(onEndTimeChanged(int)));
+    initComboBox();
 }
 
 DialogCropTime::~DialogCropTime()
@@ -30,30 +24,66 @@ DialogCropTime::~DialogCropTime()
 void DialogCropTime::setStartEndTime(const QString &startTime, const QString &endTime)
 {
     QTime startT = QTime::fromString(startTime, "h:m:s");
-    ui->spStartH->setValue(startT.hour());
-    ui->spStartM->setValue(startT.minute());
-    ui->spStartS->setValue(startT.second());
+//    ui->spStartH->setValue(startT.hour());
+//    ui->spStartM->setValue(startT.minute());
+//    ui->spStartS->setValue(startT.second());
+    for(int i = 0; i < ui->spStartH->count(); i ++) {
+        if(ui->spStartH->itemData(i).toInt() == startT.hour()) {
+            ui->spStartH->setCurrentIndex(i);
+            break;
+        }
+    }
+    for(int i = 0; i < ui->spStartM->count(); i ++) {
+        if(ui->spStartM->itemData(i).toInt() == startT.minute()) {
+            ui->spStartM->setCurrentIndex(i);
+            break;
+        }
+    }
+    for(int i = 0; i < ui->spStartS->count(); i ++) {
+        if(ui->spStartS->itemData(i).toInt() == startT.second()) {
+            ui->spStartS->setCurrentIndex(i);
+            break;
+        }
+    }
 
     QTime endT = QTime::fromString(endTime, "h:m:s");
-    ui->spEndH->setValue(endT.hour());
-    ui->spEndM->setValue(endT.minute());
-    ui->spEndS->setValue(endT.second());
+//    ui->spEndH->setValue(endT.hour());
+//    ui->spEndM->setValue(endT.minute());
+//    ui->spEndS->setValue(endT.second());
+    for(int i = 0; i < ui->spEndH->count(); i ++) {
+        if(ui->spEndH->itemData(i).toInt() == endT.hour()) {
+            ui->spEndH->setCurrentIndex(i);
+            break;
+        }
+    }
+    for(int i = 0; i < ui->spEndM->count(); i ++) {
+        if(ui->spEndM->itemData(i).toInt() == endT.minute()) {
+            ui->spEndM->setCurrentIndex(i);
+            break;
+        }
+    }
+    for(int i = 0; i < ui->spEndS->count(); i ++) {
+        if(ui->spEndS->itemData(i).toInt() == endT.second()) {
+            ui->spEndS->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 QString DialogCropTime::getStartTime()
 {
-    QString h = QString::number(ui->spStartH->value());
-    QString m = transfer(ui->spStartM->value());
-    QString s = transfer(ui->spStartS->value());
+    QString h = QString::number(ui->spStartH->currentData().toInt());
+    QString m = transfer(ui->spStartM->currentData().toInt());
+    QString s = transfer(ui->spStartS->currentData().toInt());
 
     return QString("%1:%2:%3").arg(h).arg(m).arg(s);
 }
 
 QString DialogCropTime::getEndTime()
 {
-    QString h = QString::number(ui->spEndH->value());
-    QString m = transfer(ui->spEndM->value());
-    QString s = transfer(ui->spEndS->value());
+    QString h = QString::number(ui->spEndH->currentData().toInt());
+    QString m = transfer(ui->spEndM->currentData().toInt());
+    QString s = transfer(ui->spEndS->currentData().toInt());
 
     return QString("%1:%2:%3").arg(h).arg(m).arg(s);
 }
@@ -67,34 +97,16 @@ QString DialogCropTime::transfer(int n) const
     return str;
 }
 
-void DialogCropTime::onStartTimeChanged(int value)
+void DialogCropTime::initComboBox()
 {
-    QSpinBox *p = qobject_cast<QSpinBox *>(sender());
-    if(p == nullptr)
-        return;
-    if(p->objectName().contains("StartH"))
-    {
+    for(int i = 0; i < 6; i ++) {
+        ui->spStartH->addItem(QString::number(i), i);
+        ui->spEndH->addItem(QString::number(i), i);
     }
-    else if(p->objectName().contains("StartM"))
-    {
-    }
-    else if(p->objectName().contains("StartS"))
-    {
-    }
-}
-
-void DialogCropTime::onEndTimeChanged(int value)
-{
-    QSpinBox *p = qobject_cast<QSpinBox *>(sender());
-    if(p == nullptr)
-        return;
-    if(p->objectName().contains("EndH"))
-    {
-    }
-    else if(p->objectName().contains("EndM"))
-    {
-    }
-    else if(p->objectName().contains("EndS"))
-    {
+    for(int i = 0; i < 60; i ++) {
+        ui->spStartM->addItem(QString::number(i), i);
+        ui->spEndM->addItem(QString::number(i), i);
+        ui->spStartS->addItem(QString::number(i), i);
+        ui->spEndS->addItem(QString::number(i), i);
     }
 }
